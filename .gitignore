@@ -1,0 +1,19 @@
+# Tài liệu riêng, không công khai
+MO-TA-DU-AN.md
+CLAUDE.local.md
+.claude/settings.local.json
+
+# File nguồn lớn và ảnh của bên thứ ba
+nguon/
+design/mau-trang.png
+design/mo-ta/
+design/screenshots/
+
+# File sinh ra khi chạy công cụ
+.netlify/
+node_modules/
+
+# File hệ thống
+Thumbs.db
+desktop.ini
+.DS_Store

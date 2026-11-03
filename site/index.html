@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LOGNEKO: công cụ logistics miễn phí</title>
+  <meta name="description" content="Bộ công cụ tính toán và tra cứu miễn phí cho sinh viên và người đi làm trong ngành logistics.">
+  <link rel="icon" href="data:,">
+  <script src="/assets/js/core/theme.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300..400&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/home.css">
+  <script type="module" src="/assets/js/core/layout.js"></script>
+  <script type="module" src="/assets/js/home.js"></script>
+</head>
+<body class="has-hero">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="hero">
+      <!-- Khung giữ chỗ cho ảnh cảng chiều tối -->
+      <svg class="hero-scene" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <path d="M0 214h1440v26H0z"/>
+        <path d="M150 214V62h12v152zM232 214V62h12v152zM96 62h268v10H96zM190 72h14v42h-14zM176 114h42v12h-42z"/>
+        <path d="M1130 214V40h12v174zM1216 214V40h12v174zM1072 40h280v10h-280zM1174 50h14v62h-14zM1160 112h42v12h-42z"/>
+        <path d="M420 186h92v28h-92zM516 186h92v28h-92zM612 186h92v28h-92zM708 186h92v28h-92zM804 186h92v28h-92zM900 186h92v28h-92zM468 154h92v28h-92zM564 154h92v28h-92zM660 154h92v28h-92zM756 154h92v28h-92zM852 154h92v28h-92zM564 122h92v28h-92zM756 122h92v28h-92z"/>
+      </svg>
+
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1>Công cụ logistics miễn phí, gọn trong một trang web.</h1>
+          <p>Tính CBM, chargeable weight, cước LCL, kiểm tra số container, tra Incoterms và mã HS ngay trên trình duyệt. Các công cụ đang được xây dựng và sẽ ra mắt dần.</p>
+          <a class="btn btn--primary" href="#cong-cu">Xem các công cụ</a>
+        </div>
+
+        <aside class="demo-card" aria-label="Hình minh họa công cụ CBM">
+          <div class="demo-head">
+            <span>Máy tính CBM</span>
+            <span class="badge">Minh họa</span>
+          </div>
+          <ul class="demo-rows">
+            <li>2 kiện × 92 × 61 × 37 cm</li>
+            <li>1 kiện × 78 × 63 × 40 cm</li>
+            <li>1 kiện × 87 × 58 × 34 cm</li>
+          </ul>
+          <div class="demo-total">
+            <span>Tổng thể tích</span>
+            <strong>0,7834 CBM</strong>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section container" id="cong-cu">
+      <h2 class="section-title"><span class="two-tone-soft">Tính nhanh từng lô hàng,</span> tra chuẩn từng mã HS.</h2>
+      <div class="tools-layout">
+        <div class="tool-list" id="tool-list"></div>
+        <div class="tool-preview-slot" id="tool-preview-slot"></div>
+      </div>
+    </section>
+
+    <section class="section container" aria-label="Con số">
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section class="section container" id="nguon-du-lieu">
+      <div class="data-block">
+        <h2>Dữ liệu từ đâu</h2>
+        <ul>
+          <li>Mã HS và thuế suất lấy từ biểu thuế xuất nhập khẩu; trang tra cứu sẽ ghi rõ tên file và ngày cập nhật.</li>
+          <li>Mã chủ sở hữu container theo danh sách của Terminal49 và ShipsGo.</li>
+          <li>Incoterms và từ điển do LOGNEKO viết lại từ tài liệu học.</li>
+          <li>Mọi kết quả chỉ để tham khảo, không thay thế phân loại chính thức của Hải quan hay báo giá của hãng tàu.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <noscript>Trang này cần bật JavaScript để hiện danh sách công cụ.</noscript>
+</body>
+</html>

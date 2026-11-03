@@ -1,0 +1,71 @@
+/* Biến thiết kế LOGNEKO. Màu, font, cỡ chữ chỉ khai báo ở đây. */
+
+:root {
+  color-scheme: light;
+
+  /* Màu theo chế độ */
+  --bg: #FAF7EE;
+  --card: #FFFFFF;
+  --line: #E6E1D3;
+  --text: #1E2410;
+  --text-muted: #6B6F5E;
+  --text-soft: #8A8D7C; /* chỉ dùng cho nửa nhạt của tiêu đề lớn */
+  --danger: #B3261E;
+  --success: #3F6212;
+
+  /* Màu giữ nguyên ở cả hai chế độ */
+  --accent: #D8F21C;
+  --on-accent: #1E2410;
+  --dark-block: linear-gradient(135deg, #1F2A0E, #5C6F16);
+  --on-dark-block: #F3F0E4;
+  --on-hero: #FFFFFF;
+  /* Khung giữ chỗ cho ảnh cảng chiều tối, thay bằng ảnh thật sau */
+  --hero-placeholder: linear-gradient(180deg, #171D26 0%, #2C2F3A 42%, #7A4F45 72%, #C98A5A 90%);
+  --hero-overlay: rgb(10 12 8 / 38%);
+  --hero-scene: #12160C;
+
+  /* Font */
+  --font-heading: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --weight-heading: 300;
+
+  /* Cỡ chữ: khoảng 32 px ở khổ 360 px, tới 56 px trên máy tính */
+  --size-hero: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+  --size-body: 1rem;
+  --size-small: 0.9375rem;
+
+  /* Hình khối */
+  --radius-card: 16px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 3px rgb(30 36 16 / 6%);
+}
+
+/* Máy đang để chế độ tối và người dùng chưa chọn sáng */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #12160C;
+    --card: #1B2112;
+    --line: #2F3724;
+    --text: #F3F0E4;
+    --text-muted: #A9AD9A;
+    --text-soft: #8B8F7C;
+    --danger: #FF9C92;
+    --success: #B7D66A;
+    --shadow-card: none;
+  }
+}
+
+/* Người dùng bấm chọn tối */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #12160C;
+  --card: #1B2112;
+  --line: #2F3724;
+  --text: #F3F0E4;
+  --text-muted: #A9AD9A;
+  --text-soft: #8B8F7C;
+  --danger: #FF9C92;
+  --success: #B7D66A;
+  --shadow-card: none;
+}

@@ -1,0 +1,83 @@
+{
+  "nhom": ["Tính toán", "Kiểm tra & tra cứu", "Từ điển"],
+  "cong_cu": [
+    {
+      "id": "cbm",
+      "ten": "CBM & quy đổi đơn vị",
+      "nhom": "Tính toán",
+      "trang_thai": "sap-co",
+      "mo_ta": "Tính thể tích lô hàng từ danh sách kiện và quy đổi đơn vị.",
+      "nhap": "Số kiện, dài × rộng × cao, trọng lượng mỗi kiện; dán được danh sách kiểu packing list.",
+      "ket_qua": "CBM từng dòng và tổng, tổng GW, quy đổi sang ft³ và lb."
+    },
+    {
+      "id": "chargeable-weight",
+      "ten": "Chargeable weight hàng air",
+      "nhom": "Tính toán",
+      "trang_thai": "sap-co",
+      "mo_ta": "So trọng lượng thực với trọng lượng thể tích để ra mức tính cước.",
+      "nhap": "Kích thước, GW, hãng bay hoặc chuyển phát nhanh, mức tối thiểu và đơn giá nếu có.",
+      "ket_qua": "VW, CW, bên nào thắng (nặng hay cồng kềnh), cước ước tính."
+    },
+    {
+      "id": "cuoc-lcl",
+      "ten": "Cước LCL theo W/M",
+      "nhom": "Tính toán",
+      "trang_thai": "sap-co",
+      "mo_ta": "Tính cước hàng lẻ đường biển theo khối lượng hoặc trọng lượng.",
+      "nhap": "Tổng CBM, tổng GW, đơn giá USD/RT, mức tối thiểu, các phí cộng thêm.",
+      "ket_qua": "RT tính cước, cước biển, tổng chi phí nếu có phí cộng thêm."
+    },
+    {
+      "id": "xep-container",
+      "ten": "Xếp hàng vào container",
+      "nhom": "Tính toán",
+      "trang_thai": "sap-co",
+      "mo_ta": "Ước tính số thùng vừa một cont, kèm mô phỏng 3D.",
+      "nhap": "Kích thước và trọng lượng thùng, số thùng, loại cont, số tầng chồng tối đa.",
+      "ket_qua": "Số thùng mỗi cont, số cont cần, % thể tích và tải trọng, cảnh báo vượt tải."
+    },
+    {
+      "id": "so-container",
+      "ten": "Kiểm tra số container",
+      "nhom": "Kiểm tra & tra cứu",
+      "trang_thai": "sap-co",
+      "mo_ta": "Kiểm tra số cont theo chuẩn ISO 6346.",
+      "nhap": "Một hoặc nhiều số cont, dán cả danh sách cũng được.",
+      "ket_qua": "Hợp lệ hay không, chữ số kiểm tra đúng, mã chủ sở hữu, loại thiết bị, số sê-ri."
+    },
+    {
+      "id": "incoterms",
+      "ten": "Tra cứu Incoterms 2020",
+      "nhom": "Kiểm tra & tra cứu",
+      "trang_thai": "sap-co",
+      "mo_ta": "Xem ai trả chi phí từng chặng và rủi ro chuyển ở đâu.",
+      "nhap": "Chọn một điều kiện, hoặc hai điều kiện để so sánh.",
+      "ket_qua": "Thanh hành trình, thông quan, bảo hiểm, local charges, cách ghi đúng, lỗi hay gặp."
+    },
+    {
+      "id": "hs-code",
+      "ten": "Tra cứu mã HS và thuế suất",
+      "nhom": "Kiểm tra & tra cứu",
+      "trang_thai": "sap-co",
+      "mo_ta": "Tra mã hàng và thuế suất theo biểu thuế xuất nhập khẩu.",
+      "nhap": "Mã 2 đến 8 chữ số hoặc tên hàng, gõ không dấu vẫn tìm được.",
+      "ket_qua": "Cây phân cấp, mô tả song ngữ, đơn vị tính, thuế NK ưu đãi, NK thông thường, VAT."
+    },
+    {
+      "id": "tu-dien",
+      "ten": "Thuật ngữ & viết tắt",
+      "nhom": "Từ điển",
+      "trang_thai": "sap-co",
+      "mo_ta": "Giải thích thuật ngữ logistics bằng tiếng Việt dễ hiểu.",
+      "nhap": "Thuật ngữ hoặc viết tắt, gõ sai nhẹ vẫn tìm được.",
+      "ket_qua": "Tên đầy đủ, nghĩa tiếng Việt, ví dụ trong ngữ cảnh, thuật ngữ liên quan."
+    }
+  ],
+  "so_lieu": [
+    { "so": "3", "nhan": "nhóm: tính toán, tra cứu, từ điển" },
+    { "so": "0 đồng", "nhan": "miễn phí, không cần tài khoản" },
+    { "so": "11", "nhan": "điều kiện Incoterms 2020", "can": "incoterms" },
+    { "so": "Gần 12.000", "nhan": "mã HS", "can": "hs-code" }
+  ]
+}

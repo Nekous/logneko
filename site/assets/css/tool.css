@@ -1,0 +1,183 @@
+/* Khuôn trang công cụ. Thiết kế từ khổ 360 px trở lên. */
+
+#tool-root { padding-block: 24px 0; }
+
+.tool-lead {
+  margin-top: 12px;
+  color: var(--text-muted);
+}
+
+.tool-layout {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.tool-panel {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Ô nhập */
+.tool-number-hint {
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+.tool-number-hint + .tool-field,
+.tool-field + .tool-field,
+.tool-custom,
+.tool-inputs .tool-actions { margin-top: 16px; }
+
+.tool-inputs > .tool-custom:first-child,
+.tool-inputs > .tool-actions:first-child { margin-top: 0; }
+
+.tool-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--size-small);
+  font-weight: 500;
+}
+
+/* Chữ 16 px để iPhone không tự phóng to khi bấm vào ô */
+.tool-input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+}
+
+textarea.tool-input { resize: vertical; }
+
+.tool-input::placeholder { color: var(--text-muted); }
+
+.tool-input[aria-invalid="true"] { border-color: var(--danger); }
+
+.tool-field-error {
+  margin-top: 6px;
+  color: var(--danger);
+  font-size: var(--size-small);
+}
+
+.tool-field-reading {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+/* Kết quả */
+.tool-message { color: var(--text-muted); }
+
+.tool-message.is-error { color: var(--danger); }
+
+.tool-total {
+  padding-left: 14px;
+  border-left: 3px solid var(--accent);
+}
+
+.tool-total-label {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+.tool-total-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.tool-rows { margin-top: 16px; }
+
+.tool-rows > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 8px;
+  border-top: 1px solid var(--line);
+  font-size: var(--size-small);
+}
+
+.tool-rows dt { color: var(--text-muted); }
+
+.tool-rows dd {
+  font-weight: 500;
+  text-align: right;
+}
+
+.tool-how {
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.tool-how summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--size-small);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.tool-how summary::before {
+  content: "+";
+  width: 1.25em;
+  color: var(--text-muted);
+}
+
+.tool-how[open] summary::before { content: "−"; }
+
+.tool-how ol {
+  margin: 0;
+  padding: 0 0 8px 1.25em;
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+.tool-how li + li { margin-top: 4px; }
+
+/* Hàng nút */
+.tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.tool-output .tool-actions { margin-top: 12px; }
+
+.tool-status {
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+.tool-note {
+  margin-top: 16px;
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+@media (min-width: 860px) {
+  #tool-root { padding-top: 40px; }
+
+  .tool-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .tool-panel { padding: 24px; }
+}

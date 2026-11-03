@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>Khung 360 px</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #888; }
+    iframe { display: block; width: 360px; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+  <!-- Edge không cho cửa sổ hẹp hơn 500 px. Cách dùng: khung-360.html?url=http://localhost:3000/ -->
+  <iframe id="khung" title="Trang ở khổ 360 px"></iframe>
+  <script>
+    document.getElementById('khung').src = new URLSearchParams(location.search).get('url');
+  </script>
+</body>
+</html>
