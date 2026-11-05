@@ -40,7 +40,7 @@ function createControl(field) {
   return input;
 }
 
-function createField(field) {
+export function createField(field) {
   const id = `field-${field.name}`;
   const wrap = el('div', 'tool-field');
   const labelText = field.unit ? `${field.label} (${field.unit})` : field.label;
@@ -77,6 +77,16 @@ function setFieldState({ control, error, reading }, message, readingText) {
   else control.removeAttribute('aria-describedby');
 }
 
+// Đọc một ô số và hiện "Đọc là" hoặc lỗi; ô hẹp truyền field.errorText để lỗi ngắn hơn.
+export function readNumberField(item) {
+  const { field, control } = item;
+  const number = parseNumber(control.value);
+  const invalid = control.value.trim() !== '' && number === null;
+  const readingText = number === null ? '' : `Đọc là: ${formatNumber(number, { toiDa: READING_MAX_DECIMALS })}`;
+  setFieldState(item, invalid ? field.errorText ?? ERROR_NOT_NUMBER : '', readingText);
+  return { number, invalid };
+}
+
 // Đọc các ô khai báo sẵn; number trả về số, ô trống và số sai đều không lọt vào values.
 function readFields(items) {
   const values = {};
@@ -86,22 +96,16 @@ function readFields(items) {
   for (const item of items) {
     const { field, control } = item;
     const raw = control.value;
-    const isBlank = raw.trim() === '';
-    let message = '';
-    let readingText = '';
 
     if (field.type === 'select' || field.type === 'textarea') {
       values[field.name] = raw;
     } else {
-      const number = parseNumber(raw);
-      values[field.name] = number;
-      if (!isBlank && number === null) message = ERROR_NOT_NUMBER;
-      if (number !== null) readingText = `Đọc là: ${formatNumber(number, { toiDa: READING_MAX_DECIMALS })}`;
+      const reading = readNumberField(item);
+      values[field.name] = reading.number;
+      if (reading.invalid) invalid = true;
     }
 
-    setFieldState(item, message, readingText);
-    if (message) invalid = true;
-    if (isBlank && !field.optional) missing = true;
+    if (raw.trim() === '' && !field.optional) missing = true;
   }
   return { values, missing, invalid };
 }
@@ -139,7 +143,7 @@ async function findTool(id) {
 }
 
 export async function mountTool(config) {
-  const { id, fields = [], renderInputs, example, calculate, renderResult, steps, copyText, note } = config;
+  const { id, fields = [], renderInputs, example, calculate, renderResult, steps, copyText, stickyTotal, note } = config;
   const tool = await findTool(id);
   const root = document.getElementById('tool-root');
 
@@ -174,6 +178,12 @@ export async function mountTool(config) {
   result.setAttribute('aria-live', 'polite');
   result.append(message, body, output);
 
+  // Danh sách dài đẩy khung kết quả xuống xa, nên trên điện thoại giữ tổng trong tầm mắt.
+  // Khung kết quả đã đọc cho trình đọc màn hình, thanh này không đọc lặp lại.
+  const sticky = el('p', 'tool-sticky-total');
+  sticky.hidden = true;
+  sticky.setAttribute('aria-hidden', 'true');
+
   const showMessage = (text, isError = false) => {
     current = null;
     message.textContent = text;
@@ -181,6 +191,7 @@ export async function mountTool(config) {
     message.classList.toggle('is-error', isError);
     body.replaceChildren();
     output.hidden = true;
+    sticky.hidden = true;
   };
 
   const showResult = (values, value) => {
@@ -190,13 +201,22 @@ export async function mountTool(config) {
     renderResult(value, body);
     stepList.replaceChildren(...steps(values, value).map((step) => el('li', '', step)));
     output.hidden = false;
+    if (stickyTotal) {
+      sticky.textContent = stickyTotal(value);
+      sticky.hidden = false;
+    }
   };
 
   let custom;
 
   const update = () => {
-    const { values, missing, invalid } = readFields(items);
-    if (custom) Object.assign(values, custom.read());
+    const { values, missing, invalid: fieldInvalid } = readFields(items);
+    let invalid = fieldInvalid;
+    if (custom) {
+      const state = custom.read();
+      Object.assign(values, state.values);
+      invalid ||= state.invalid;
+    }
     if (invalid) return showMessage(PROMPT_INVALID);
     if (missing) return showMessage(PROMPT_EMPTY);
 
@@ -213,6 +233,7 @@ export async function mountTool(config) {
   };
 
   // Ô nhập đặc biệt, như danh sách kiện của CBM, tự vẽ và trả về { read, fill }.
+  // read() trả về { values, invalid }; ô thiếu do calculate tự xét bằng cách trả về null.
   if (renderInputs) {
     const slot = el('div', 'tool-custom');
     inputs.append(slot);
@@ -236,6 +257,7 @@ export async function mountTool(config) {
     inputs.append(row);
   }
 
+  if (stickyTotal) inputs.append(sticky);
   inputs.addEventListener('input', update);
 
   const layout = el('div', 'tool-layout');

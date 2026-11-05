@@ -5,7 +5,7 @@
       "id": "cbm",
       "ten": "CBM & quy đổi đơn vị",
       "nhom": "Tính toán",
-      "trang_thai": "sap-co",
+      "trang_thai": "hoat-dong",
       "mo_ta": "Tính thể tích lô hàng từ danh sách kiện và quy đổi đơn vị.",
       "nhap": "Số kiện, dài × rộng × cao, trọng lượng mỗi kiện; dán được danh sách kiểu packing list.",
       "ket_qua": "CBM từng dòng và tổng, tổng GW, quy đổi sang ft³ và lb."

@@ -7,7 +7,7 @@ const dataDir = new URL('../site/data/', import.meta.url);
 const readJson = (name) => JSON.parse(readFileSync(new URL(name, dataDir), 'utf8'));
 const withLive = (data, ...ids) => ({
   ...data,
-  cong_cu: data.cong_cu.map((tool) => (ids.includes(tool.id) ? { ...tool, trang_thai: 'hoat-dong' } : tool)),
+  cong_cu: data.cong_cu.map((tool) => ({ ...tool, trang_thai: ids.includes(tool.id) ? 'hoat-dong' : 'sap-co' })),
 });
 
 test('mọi file JSON trong site/data hợp lệ', () => {
@@ -37,7 +37,7 @@ test('số liệu chỉ phụ thuộc công cụ có thật', () => {
 });
 
 test('chưa có công cụ nào chạy thì không nêu số Incoterms và mã HS', () => {
-  const stats = statsFor(readJson('tools.json'));
+  const stats = statsFor(withLive(readJson('tools.json')));
   assert.equal(stats[0].nhan, 'công cụ đang xây dựng');
   const text = stats.map((stat) => stat.so).join(' ');
   assert.ok(!text.includes('12.000'));
