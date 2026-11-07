@@ -1,19 +1,10 @@
-// Trang công cụ CBM: danh sách kiện, dán nhanh và cách hiện kết quả.
-import { calculateCbm, cbmCopyText, cbmSteps, chuaTinhText, formatCbm, lineLabel, parsePackingList } from '../calc/cbm.js';
+// Trang công cụ CBM: danh sách kiện, ô Tổng GW và cách hiện kết quả.
+import { calculateCbm, cbmCopyText, cbmSteps, chuaTinhText, formatCbm, lineLabel } from '../calc/cbm.js';
 import { formatNumber } from '../core/format.js';
+import { renderPackageList, showNumber } from '../core/package-list.js';
 import { createField, mountTool, readNumberField } from '../core/tool-shell.js';
 
-const SHORT_ERROR = 'Chưa đọc được';
-const FILL_DECIMALS = { toiDa: 10 };
-const LINE_FIELDS = [
-  { key: 'soKien', label: 'Số kiện' },
-  { key: 'trongLuong', label: 'Trọng lượng mỗi kiện' },
-  { key: 'dai', label: 'Dài' },
-  { key: 'rong', label: 'Rộng' },
-  { key: 'cao', label: 'Cao' },
-];
-const SIZE_UNITS = ['cm', 'm', 'inch'];
-const WEIGHT_UNITS = ['kg', 'lb'];
+const WEIGHT_HINT = 'Trọng lượng không bắt buộc. Chỉ biết tổng của cả lô thì để trống từng dòng và nhập ô Tổng GW bên dưới.';
 
 // Lô B trong bài thực hành: bài học chỉ ghi tổng GW, không ghi từng kiện.
 const EXAMPLE = {
@@ -34,161 +25,21 @@ function el(tag, className, text) {
   return node;
 }
 
-function button(text, onClick) {
-  const node = el('button', 'btn', text);
-  node.type = 'button';
-  node.addEventListener('click', onClick);
-  return node;
-}
-
-function unitField(name, label, units) {
-  return createField({ name, label, type: 'select', options: units.map((unit) => ({ value: unit, label: unit })) });
-}
-
-function showNumber(value) {
-  return value === null || value === undefined ? '' : formatNumber(value, FILL_DECIMALS);
-}
-
-function renderPackageInputs(slot, onChange) {
-  const sizeUnit = unitField('don-vi-kich-thuoc', 'Đơn vị kích thước', SIZE_UNITS);
-  const weightUnit = unitField('don-vi-trong-luong', 'Đơn vị trọng lượng', WEIGHT_UNITS);
-  const units = el('div', 'pkg-units');
-  units.append(sizeUnit.wrap, weightUnit.wrap);
-
-  const list = el('div', 'pkg-list');
-  const rows = [];
-  let nextId = 1;
-
-  const renumber = () => {
-    rows.forEach((row, index) => {
-      const name = `Dòng ${index + 1}`;
-      row.title.textContent = name;
-      row.node.setAttribute('aria-label', name);
-      row.remove.setAttribute('aria-label', `Xóa dòng ${index + 1}`);
-    });
-  };
-
-  const removeRow = (row) => {
-    rows.splice(rows.indexOf(row), 1);
-    row.node.remove();
-    if (rows.length === 0) addRow();
-    renumber();
-    addButton.focus();
-    onChange();
-  };
-
-  function addRow(values = {}) {
-    const id = nextId;
-    nextId += 1;
-    const node = el('div', 'pkg-row');
-    node.setAttribute('role', 'group');
-
-    const head = el('div', 'pkg-row-head');
-    const title = el('span', 'pkg-row-title');
-    const row = { node, title, cells: {} };
-    row.remove = button('Xóa', () => removeRow(row));
-    head.append(title, row.remove);
-
-    const cells = el('div', 'pkg-cells');
-    for (const { key, label } of LINE_FIELDS) {
-      const item = createField({ name: `${key}-${id}`, label, errorText: SHORT_ERROR });
-      item.wrap.dataset.cell = key;
-      item.control.value = showNumber(values[key]);
-      row.cells[key] = item;
-      cells.append(item.wrap);
-    }
-
-    node.append(head, cells);
-    list.append(node);
-    rows.push(row);
-    return row;
-  }
-
-  const isBlank = (row) => Object.values(row.cells).every(({ control }) => control.value.trim() === '');
-
-  const addButton = button('Thêm dòng', () => {
-    const row = addRow();
-    renumber();
-    row.cells.soKien.control.focus();
-    onChange();
-  });
-  const addRowBar = el('div', 'tool-actions');
-  addRowBar.append(addButton);
-
-  const pasteArea = createField({ name: 'dan-nhanh', label: 'Dán nhanh kiểu packing list', type: 'textarea', rows: 3, placeholder: '2(92*61*37)\n1(78*63*40)' });
-  const pasteStatus = el('p', 'pkg-paste-status');
-  pasteStatus.setAttribute('role', 'status');
-  pasteStatus.hidden = true;
-
-  const setPasteStatus = (text, isError = false) => {
-    pasteStatus.textContent = text;
-    pasteStatus.hidden = !text;
-    pasteStatus.classList.toggle('is-error', isError);
-    if (isError) pasteArea.control.setAttribute('aria-invalid', 'true');
-    else pasteArea.control.removeAttribute('aria-invalid');
-  };
-
-  const pasteButton = button('Đưa vào danh sách', () => {
-    const { kien, loi } = parsePackingList(pasteArea.control.value, sizeUnit.control.value);
-    if (loi) {
-      setPasteStatus(loi, true);
-      return;
-    }
-    for (const row of rows.filter(isBlank)) {
-      rows.splice(rows.indexOf(row), 1);
-      row.node.remove();
-    }
-    for (const values of kien) addRow(values);
-    renumber();
-    pasteArea.control.value = '';
-    setPasteStatus(`Đã thêm ${kien.length} dòng vào danh sách.`);
-    onChange();
-  });
-  const pasteBar = el('div', 'tool-actions');
-  pasteBar.append(pasteButton);
-
+function renderInputs(slot, onChange) {
+  const list = renderPackageList(slot, onChange, { hint: WEIGHT_HINT });
   const totalGw = createField({ name: 'tong-gw', label: 'Tổng GW', optional: true });
-  const unitHint = el('p', 'pkg-hint', 'Trọng lượng không bắt buộc. Chỉ biết tổng của cả lô thì để trống từng dòng và nhập ô Tổng GW bên dưới.');
-
-  slot.append(units, unitHint, list, addRowBar, pasteArea.wrap, pasteBar, pasteStatus, totalGw.wrap);
-
-  addRow();
-  renumber();
+  slot.append(totalGw.wrap);
 
   return {
     read() {
-      let invalid = false;
-      const readCell = (item) => {
-        const reading = readNumberField(item);
-        if (reading.invalid) invalid = true;
-        return reading.number;
-      };
-
-      const kien = rows.map((row) => Object.fromEntries(
-        LINE_FIELDS.map(({ key }) => [key, readCell(row.cells[key])]),
-      ));
-      const tongGw = readCell(totalGw);
-
-      return {
-        values: {
-          donViKichThuoc: sizeUnit.control.value,
-          donViTrongLuong: weightUnit.control.value,
-          kien,
-          tongGw,
-        },
-        invalid,
-      };
+      const { values, invalid } = list.read();
+      const reading = readNumberField(totalGw);
+      return { values: { ...values, tongGw: reading.number }, invalid: invalid || reading.invalid };
     },
 
     fill(example) {
-      sizeUnit.control.value = example.donViKichThuoc;
-      weightUnit.control.value = example.donViTrongLuong;
-      for (const row of rows.splice(0)) row.node.remove();
-      for (const values of example.kien) addRow(values);
-      renumber();
+      list.fill(example);
       totalGw.control.value = showNumber(example.tongGw);
-      pasteArea.control.value = '';
-      setPasteStatus('');
     },
   };
 }
@@ -236,12 +87,23 @@ function renderResult(value, box) {
 
 await mountTool({
   id: 'cbm',
-  renderInputs: renderPackageInputs,
+  renderInputs,
   example: EXAMPLE,
   calculate: calculateCbm,
   renderResult,
   steps: (values, value) => cbmSteps(value),
   copyText: cbmCopyText,
+  transfer: [{
+    den: 'chargeable-weight',
+    nhan: 'Tính chargeable weight',
+    // Chỉ chuyển dòng đủ số, GW luôn tính bằng kg vì công cụ đích dùng kg.
+    data: (value) => ({
+      donViKichThuoc: value.donViKichThuoc,
+      kien: value.dong.map(({ soKien, dai, rong, cao }) => ({ soKien, dai, rong, cao })),
+      gw: value.gwKg,
+      ghiChuChuyen: value.chuaTinh.length > 0 ? `Chưa chuyển dòng ${value.chuaTinh.join(', ')} vì chưa đủ số.` : '',
+    }),
+  }],
   stickyTotal: (value) => {
     const rest = value.chuaTinh.length > 0 ? `, chưa tính dòng ${value.chuaTinh.join(', ')}` : '';
     return `Tổng: ${formatCbm(value.tongCbm)} CBM${rest}`;

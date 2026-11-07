@@ -2,6 +2,9 @@
 
 #tool-root { padding-block: 24px 0; }
 
+/* Tên dài xuống dòng thì chia đều hai dòng, không để lẻ một chữ. */
+.tool-head h1 { text-wrap: balance; }
+
 .tool-lead {
   margin-top: 12px;
   color: var(--text-muted);
@@ -23,6 +26,14 @@
 }
 
 /* Ô nhập */
+.tool-received {
+  margin-bottom: 12px;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+  font-size: var(--size-small);
+  font-weight: 500;
+}
+
 .tool-number-hint {
   color: var(--text-muted);
   font-size: var(--size-small);
@@ -251,6 +262,7 @@ html { scroll-padding-bottom: 64px; }
 .pkg-cells .tool-field { grid-column: span 2; }
 .pkg-cells .tool-field + .tool-field { margin-top: 0; }
 .pkg-cells [data-cell="trongLuong"] { grid-column: span 4; }
+.pkg-cells [data-cell="dai"] { grid-column: 1 / span 2; }
 
 .pkg-cells .tool-input { padding-inline: 8px; }
 
@@ -261,6 +273,8 @@ html { scroll-padding-bottom: 64px; }
 }
 
 .tool-custom > .tool-field { margin-top: 16px; }
+
+.tool-custom > .tool-field[hidden] { display: none; }
 
 .pkg-paste-status {
   margin-top: 8px;

@@ -1,7 +1,7 @@
 // Công thức CBM và quy đổi đơn vị. Hàm thuần, chạy được cả trong test.
 import { formatNumber, parseNumber } from '../core/format.js';
 
-const CM_PER_UNIT = { cm: 1, m: 100, inch: 2.54 };
+export const CM_PER_UNIT = { cm: 1, m: 100, inch: 2.54 };
 const CM3_PER_M3 = 1000000;
 const MAX_SIZE_CM = 10000;
 const KG_PER_LB = 0.45359237;

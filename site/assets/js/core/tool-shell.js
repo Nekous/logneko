@@ -1,12 +1,14 @@
 // Khuôn chung của trang công cụ: trang chỉ khai báo ô nhập, hàm tính và cách trình bày.
 import { formatNumber, parseNumber } from './format.js';
-import { loadTools } from './tools.js';
+import { isLive, loadTools, toolHref } from './tools.js';
+import { saveTransfer, takeTransfer } from './transfer.js';
 
 const PROMPT_EMPTY = 'Nhập đủ các ô để xem kết quả.';
 const PROMPT_INVALID = 'Sửa ô đang báo lỗi để xem kết quả.';
 const NUMBER_HINT = 'Cách gõ số: dấu chấm (.) ngăn phần nghìn, dấu phẩy (,) ngăn phần thập phân. Ví dụ: 1.234,5.';
 const ERROR_NOT_NUMBER = 'Chưa đọc được số này. Dấu chấm ngăn phần nghìn, dấu phẩy ngăn phần thập phân, ví dụ 1.234,5.';
 const ERROR_CALCULATE = 'Không tính được với số liệu này.';
+const ERROR_TRANSFER = 'Trình duyệt chặn chuyển số liệu, bạn hãy mở công cụ kia và nhập lại.';
 const STATUS_RESET_MS = 2500;
 // Dòng "Đọc là" phải hiện đủ số đã gõ, không làm tròn như kết quả.
 const READING_MAX_DECIMALS = 10;
@@ -131,20 +133,42 @@ function createCopyButton(getText) {
   return { button, status };
 }
 
-async function findTool(id) {
+async function loadToolList() {
   try {
     const data = await loadTools();
-    return data.cong_cu.find((tool) => tool.id === id);
+    return data.cong_cu;
   } catch (error) {
-    // Thiếu tên và mô tả thì công cụ vẫn tính được.
+    // Thiếu tên, mô tả và nút chuyển thì công cụ vẫn tính được.
     console.error(error);
-    return undefined;
+    return [];
   }
 }
 
+// Nút chuyển số liệu sang công cụ khác; công cụ đích chưa hoạt động thì không có nút.
+function createTransferButtons(transfer, tools, source, getValue, status) {
+  const buttons = [];
+  for (const { den, nhan, data } of transfer) {
+    const target = tools.find((tool) => tool.id === den);
+    if (!target || !isLive(target)) continue;
+
+    const button = el('button', 'btn', nhan);
+    button.type = 'button';
+    button.addEventListener('click', () => {
+      if (saveTransfer(den, { tu: source?.ten, data: data(getValue()) })) {
+        window.location.href = toolHref(target);
+      } else {
+        status.textContent = ERROR_TRANSFER;
+      }
+    });
+    buttons.push(button);
+  }
+  return buttons;
+}
+
 export async function mountTool(config) {
-  const { id, fields = [], renderInputs, example, calculate, renderResult, steps, copyText, stickyTotal, note } = config;
-  const tool = await findTool(id);
+  const { id, fields = [], renderInputs, example, calculate, renderResult, steps, copyText, transfer = [], stickyTotal, note } = config;
+  const tools = await loadToolList();
+  const tool = tools.find((item) => item.id === id);
   const root = document.getElementById('tool-root');
 
   const head = el('header', 'tool-head');
@@ -166,11 +190,11 @@ export async function mountTool(config) {
   const stepList = el('ol');
   how.append(el('summary', '', 'Xem cách tính'), stepList);
 
-  // Hàng nút: các giai đoạn sau thêm Chuyển công cụ và Xuất PDF/ảnh vào đây.
+  // Hàng nút: các giai đoạn sau thêm Xuất PDF/ảnh vào đây.
   let current = null;
   const copy = createCopyButton(() => copyText(current));
   const actions = el('div', 'tool-actions');
-  actions.append(copy.button, copy.status);
+  actions.append(copy.button, ...createTransferButtons(transfer, tools, tool, () => current, copy.status), copy.status);
   output.append(how, actions);
 
   const result = el('section', 'tool-panel tool-result');
@@ -240,17 +264,27 @@ export async function mountTool(config) {
     custom = renderInputs(slot, update);
   }
 
+  const notice = el('p', 'tool-received');
+  notice.setAttribute('role', 'status');
+  notice.hidden = true;
+  inputs.prepend(notice);
+
+  const fillInputs = (data) => {
+    // Ô dữ liệu không nhắc tới thì trả về mặc định, để số cũ không làm sai kết quả.
+    for (const { field, control } of items) {
+      const fallback = field.type === 'select' ? field.options[0].value : '';
+      control.value = data[field.name] ?? fallback;
+    }
+    custom?.fill(data);
+    update();
+  };
+
   if (example) {
     const fill = el('button', 'btn', 'Điền ví dụ');
     fill.type = 'button';
     fill.addEventListener('click', () => {
-      // Ô ví dụ không nhắc tới thì trả về mặc định, để số cũ không làm sai kết quả ví dụ.
-      for (const { field, control } of items) {
-        const fallback = field.type === 'select' ? field.options[0].value : '';
-        control.value = example[field.name] ?? fallback;
-      }
-      custom?.fill(example);
-      update();
+      notice.hidden = true;
+      fillInputs(example);
     });
     const row = el('div', 'tool-actions');
     row.append(fill);
@@ -265,5 +299,12 @@ export async function mountTool(config) {
   root.replaceChildren(head, layout);
   if (note) root.append(el('p', 'tool-note', note));
 
-  update();
+  const received = takeTransfer(id);
+  if (received) {
+    fillInputs(received.data);
+    notice.textContent = [`Đã nhận số liệu từ công cụ ${received.tu}.`, received.data.ghiChuChuyen].filter(Boolean).join(' ');
+    notice.hidden = false;
+  } else {
+    update();
+  }
 }
