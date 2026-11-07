@@ -38,6 +38,9 @@
   --radius-card: 16px;
   --radius-pill: 999px;
   --shadow-card: 0 1px 3px rgb(30 36 16 / 6%);
+  /* Khối nổi trên nội dung, như danh sách gợi ý */
+  --shadow-pop: 0 8px 24px rgb(30 36 16 / 14%);
+  --line-pop: var(--line);
 }
 
 /* Máy đang để chế độ tối và người dùng chưa chọn sáng */
@@ -53,6 +56,8 @@
     --danger: #FF9C92;
     --success: #B7D66A;
     --shadow-card: none;
+    --shadow-pop: 0 12px 32px rgb(0 0 0 / 55%);
+    --line-pop: #4A5538;
   }
 }
 
@@ -68,4 +73,6 @@
   --danger: #FF9C92;
   --success: #B7D66A;
   --shadow-card: none;
+  --shadow-pop: 0 12px 32px rgb(0 0 0 / 55%);
+  --line-pop: #4A5538;
 }

@@ -131,6 +131,18 @@ textarea.tool-input { resize: vertical; }
   overflow-wrap: anywhere;
 }
 
+/* Hàng con, như từng phí dưới tổng phí một đầu: lùi vào, chữ nhỏ, không kẻ */
+.tool-rows > .tool-row-sub {
+  padding: 0 0 8px 12px;
+  border-top: 0;
+  font-size: 0.8125rem;
+}
+
+.tool-row-sub dd {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
 .tool-warning {
   margin-top: 12px;
   color: var(--danger);
@@ -275,6 +287,109 @@ html { scroll-padding-bottom: 64px; }
 .tool-custom > .tool-field { margin-top: 16px; }
 
 .tool-custom > .tool-field[hidden] { display: none; }
+
+.tool-custom > .tool-field:first-child { margin-top: 0; }
+
+/* Danh sách phí: tên phí một hàng; số tiền và cách tính một hàng */
+/* Tiêu đề phụ dùng thẻ h2 cho đúng cấp, nhưng giữ chữ thường nhỏ của khung nhập */
+.fee-title {
+  margin-top: 24px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.fee-cells {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 8px;
+}
+
+.fee-cells .tool-field:first-child { grid-column: 1 / -1; }
+.fee-cells .tool-field + .tool-field { margin-top: 0; }
+
+.fee-cells .tool-field-error,
+.fee-cells .tool-field-reading {
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
+/* Ô chữ có danh sách gợi ý: mũi tên nằm trong ô, danh sách nổi ngay dưới ô */
+.combo { position: relative; }
+
+.combo .tool-input { padding-right: 44px; }
+
+.combo-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0 10px 10px 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* Mũi tên cùng màu chữ, đậm như mũi tên của ô chọn Cách tính bên cạnh */
+.combo-arrow {
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.combo-toggle[aria-expanded="true"] .combo-arrow { transform: translateY(2px) rotate(-135deg); }
+
+.combo-list {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  right: 0;
+  left: 0;
+  max-height: 264px;
+  margin: 0;
+  padding: 4px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid var(--line-pop);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: var(--shadow-pop);
+  list-style: none;
+}
+
+.combo-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Màu kẻ làm nền dòng đang chọn: thấy rõ trên thẻ ở cả nền sáng và nền tối */
+.combo-option:hover,
+.combo-option[aria-selected="true"] { background: var(--line); }
+
+.combo-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.combo-hint {
+  flex: none;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
 
 .pkg-paste-status {
   margin-top: 8px;

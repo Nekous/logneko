@@ -1,0 +1,27 @@
+{
+  "ghi_chu": "Danh sách gợi ý tên phí cho công cụ cước LCL. Chỉ có tên và cách tính thường gặp, không có số tiền. cach_tinh: rt là nhân với RT, lo là cộng một lần cho cả lô.",
+  "dau_xuat": [
+    { "ten": "CFS fee", "goi_y": ["phí kho CFS", "consolidate"], "cach_tinh": "rt" },
+    { "ten": "THC", "goi_y": ["Terminal Handling Charge", "phí làm hàng"], "cach_tinh": "rt" },
+    { "ten": "Bill fee", "goi_y": ["Doc fee", "phí vận đơn", "phí chứng từ"], "cach_tinh": "lo" },
+    { "ten": "Telex release", "goi_y": ["Surrendered fee", "điện giao hàng"], "cach_tinh": "lo" },
+    { "ten": "AFR (đi Nhật)", "goi_y": ["khai báo trước", "Nhật Bản"], "cach_tinh": "lo" },
+    { "ten": "AMS (đi Mỹ)", "goi_y": ["khai báo trước", "Mỹ"], "cach_tinh": "lo" },
+    { "ten": "ENS (đi EU)", "goi_y": ["khai báo trước", "châu Âu"], "cach_tinh": "lo" },
+    { "ten": "ACI (đi Canada)", "goi_y": ["khai báo trước", "Canada"], "cach_tinh": "lo" },
+    { "ten": "Handling fee", "goi_y": ["phí dịch vụ forwarder"], "cach_tinh": "lo" },
+    { "ten": "Phí hạ tầng cảng biển", "goi_y": ["hạ tầng"], "cach_tinh": "lo" },
+    { "ten": "Trucking ra kho CFS", "goi_y": ["vận chuyển nội địa", "xe"], "cach_tinh": "lo" },
+    { "ten": "Thông quan xuất khẩu", "goi_y": ["khai hải quan", "customs clearance"], "cach_tinh": "lo" }
+  ],
+  "dau_nhap": [
+    { "ten": "D/O fee", "goi_y": ["DO", "Delivery Order", "lệnh giao hàng"], "cach_tinh": "lo" },
+    { "ten": "CFS fee", "goi_y": ["phí kho CFS", "stripping", "rút hàng"], "cach_tinh": "rt" },
+    { "ten": "THC", "goi_y": ["Terminal Handling Charge", "phí làm hàng"], "cach_tinh": "rt" },
+    { "ten": "CIC", "goi_y": ["Container Imbalance Charge", "mất cân bằng vỏ"], "cach_tinh": "rt" },
+    { "ten": "Handling fee", "goi_y": ["phí dịch vụ forwarder", "co-loader"], "cach_tinh": "lo" },
+    { "ten": "Thông quan nhập khẩu", "goi_y": ["khai hải quan", "customs clearance"], "cach_tinh": "lo" },
+    { "ten": "Phí kiểm hóa", "goi_y": ["luồng đỏ"], "cach_tinh": "lo" },
+    { "ten": "Trucking về kho", "goi_y": ["vận chuyển nội địa", "xe"], "cach_tinh": "lo" }
+  ]
+}

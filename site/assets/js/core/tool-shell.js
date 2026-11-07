@@ -37,9 +37,14 @@ function createControl(field) {
   }
   const input = el('input', 'tool-input');
   input.type = 'text';
-  input.inputMode = 'decimal';
   input.autocomplete = 'off';
+  // Ô chữ như tên phí không mở bàn phím số.
+  if (field.type !== 'text') input.inputMode = 'decimal';
   return input;
+}
+
+function isNumberField(field) {
+  return !['select', 'textarea', 'text'].includes(field.type);
 }
 
 export function createField(field) {
@@ -99,7 +104,7 @@ function readFields(items) {
     const { field, control } = item;
     const raw = control.value;
 
-    if (field.type === 'select' || field.type === 'textarea') {
+    if (!isNumberField(field)) {
       values[field.name] = raw;
     } else {
       const reading = readNumberField(item);
@@ -178,7 +183,7 @@ export async function mountTool(config) {
   const inputs = el('section', 'tool-panel tool-inputs');
   inputs.setAttribute('aria-label', 'Ô nhập');
   const items = fields.map(createField);
-  const hasNumberInput = renderInputs || fields.some((field) => field.type !== 'select' && field.type !== 'textarea');
+  const hasNumberInput = renderInputs || fields.some(isNumberField);
   if (hasNumberInput) inputs.append(el('p', 'tool-number-hint', NUMBER_HINT));
   inputs.append(...items.map((item) => item.wrap));
 

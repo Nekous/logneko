@@ -103,6 +103,14 @@ await mountTool({
       gw: value.gwKg,
       ghiChuChuyen: value.chuaTinh.length > 0 ? `Chưa chuyển dòng ${value.chuaTinh.join(', ')} vì chưa đủ số.` : '',
     }),
+  }, {
+    den: 'cuoc-lcl',
+    nhan: 'Tính cước LCL',
+    data: (value) => ({
+      tongCbm: value.tongCbm,
+      gw: value.gwKg,
+      ghiChuChuyen: value.chuaTinh.length > 0 ? `Tổng CBM chưa gồm dòng ${value.chuaTinh.join(', ')} vì chưa đủ số.` : '',
+    }),
   }],
   stickyTotal: (value) => {
     const rest = value.chuaTinh.length > 0 ? `, chưa tính dòng ${value.chuaTinh.join(', ')}` : '';
