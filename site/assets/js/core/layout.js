@@ -67,7 +67,8 @@ function renderFooter() {
         <p class="footer-note">
           Mã chủ sở hữu container theo
           <a href="https://terminal49.com/tools/scac-code-lookup" target="_blank" rel="noopener">Terminal49</a>
-          và <a href="https://shipsgo.com/ocean/container-prefixes/kmtu/container-tracking" target="_blank" rel="noopener">ShipsGo</a>.
+          và ShipsGo (<a href="https://shipsgo.com/fr/ocean/container-prefixes/situ/container-tracking" target="_blank" rel="noopener">SITC</a>,
+          <a href="https://shipsgo.com/ocean/container-prefixes/kmtu/container-tracking" target="_blank" rel="noopener">KMTC</a>).
           Kết quả chỉ để tham khảo.
           © ${new Date().getFullYear()} LOGNEKO.
         </p>

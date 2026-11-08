@@ -1,0 +1,30 @@
+{
+  "ghi_chu": "Mã chủ sở hữu container (4 chữ đầu của số cont) theo hãng. Mã chỉ cho biết ai sở hữu vỏ cont, không cho biết hãng nào đang chở lô hàng. Muốn thêm hãng thì kiểm tra nguồn trước rồi bổ sung. Trong nguon, nguồn chính không có cho; nguồn phụ ghi hãng mà nó dùng cho.",
+  "ngay_cap_nhat": "02/11/2026",
+  "nguon": [
+    { "ten": "Terminal49", "link": "https://terminal49.com/tools/scac-code-lookup" },
+    { "ten": "ShipsGo", "cho": "SITC", "link": "https://shipsgo.com/fr/ocean/container-prefixes/situ/container-tracking" },
+    { "ten": "ShipsGo", "cho": "KMTC", "link": "https://shipsgo.com/ocean/container-prefixes/kmtu/container-tracking" }
+  ],
+  "hang": [
+    { "ten": "MSC", "ma": ["MSCU", "MEDU"] },
+    { "ten": "Maersk", "ma": ["MAEU", "MRKU", "MSKU", "MRSU", "MNBU", "PONU"] },
+    { "ten": "CMA CGM", "ma": ["CMAU", "CGMU", "CXDU", "ECMU"] },
+    { "ten": "COSCO", "ma": ["COSU", "CBHU", "CCLU"] },
+    { "ten": "Hapag-Lloyd", "ma": ["HLBU", "HLXU", "HLCU"] },
+    { "ten": "ONE", "ma": ["ONEU", "TLLU", "KKLU"] },
+    { "ten": "Evergreen", "ma": ["EGHU", "EISU", "EITU", "EGSU"] },
+    { "ten": "OOCL", "ma": ["OOLU", "OOCU"] },
+    { "ten": "Yang Ming", "ma": ["YMLU", "YMMU"] },
+    { "ten": "HMM", "ma": ["HDMU", "HMMU"] },
+    { "ten": "ZIM", "ma": ["ZIMU", "ZCSU"] },
+    { "ten": "PIL", "ma": ["PCIU", "PILU"] },
+    { "ten": "Wan Hai", "ma": ["WHLU", "WHSU"] },
+    { "ten": "T.S. Lines", "ma": ["TLXU"] },
+    { "ten": "Hamburg Süd", "ma": ["SUDU", "ALBU"] },
+    { "ten": "APL", "ma": ["APLU", "APRU"] },
+    { "ten": "Gold Star Line", "ma": ["GOSU"] },
+    { "ten": "SITC", "ma": ["SITU"] },
+    { "ten": "KMTC", "ma": ["KMTU"] }
+  ]
+}

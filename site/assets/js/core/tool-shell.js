@@ -57,6 +57,8 @@ export function createField(field) {
   const control = createControl(field);
   control.id = id;
   if (field.placeholder) control.placeholder = field.placeholder;
+  // Thuộc tính riêng của từng ô, như ô số container tự gõ chữ hoa và không sửa chính tả.
+  for (const [name, value] of Object.entries(field.attrs ?? {})) control.setAttribute(name, value);
 
   const error = el('p', 'tool-field-error');
   error.id = `${id}-loi`;
@@ -66,7 +68,15 @@ export function createField(field) {
   reading.id = `${id}-doc-la`;
   reading.hidden = true;
 
-  wrap.append(label, control, error, reading);
+  wrap.append(label, control);
+  // Lời dặn cách nhập cho ô chữ; ô số đã có dòng "Đọc là" dùng chung chỗ mô tả.
+  if (field.hint) {
+    const hint = el('p', 'tool-field-reading', field.hint);
+    hint.id = `${id}-huong-dan`;
+    control.setAttribute('aria-describedby', hint.id);
+    wrap.append(hint);
+  }
+  wrap.append(error, reading);
   return { field, wrap, control, error, reading };
 }
 
@@ -172,6 +182,8 @@ function createTransferButtons(transfer, tools, source, getValue, status) {
 
 export async function mountTool(config) {
   const { id, fields = [], renderInputs, example, calculate, renderResult, steps, copyText, transfer = [], stickyTotal, note } = config;
+  // Trang chỉ có một ô thì nói thẳng cần nhập gì, thay cho câu chung.
+  const emptyText = config.emptyText ?? PROMPT_EMPTY;
   const tools = await loadToolList();
   const tool = tools.find((item) => item.id === id);
   const root = document.getElementById('tool-root');
@@ -247,7 +259,7 @@ export async function mountTool(config) {
       invalid ||= state.invalid;
     }
     if (invalid) return showMessage(PROMPT_INVALID);
-    if (missing) return showMessage(PROMPT_EMPTY);
+    if (missing) return showMessage(emptyText);
 
     let value;
     try {
@@ -256,7 +268,7 @@ export async function mountTool(config) {
       console.error(error);
       return showMessage(ERROR_CALCULATE, true);
     }
-    if (!value) return showMessage(PROMPT_EMPTY);
+    if (!value) return showMessage(emptyText);
     if (value.loi) return showMessage(value.loi, true);
     return showResult(values, value);
   };
