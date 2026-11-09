@@ -2,17 +2,17 @@
 
 Website miễn phí gom 8 công cụ tính toán và tra cứu cho sinh viên và người đi làm trong ngành logistics. Kết quả hiện ngay khi nhập, và có nút "Xem cách tính" để xem công thức từng bước.
 
-> Dự án đang được xây dựng. Link dùng thử sẽ được cập nhật khi có bản đầu tiên.
+> Dùng thử: https://logneko.netlify.app. Bản đầu có 4/8 công cụ, các công cụ còn lại đang được xây dựng.
 
 ## Các công cụ
 
 | Nhóm | Công cụ | Trạng thái |
 |---|---|---|
-| Tính toán | CBM & quy đổi đơn vị | Sắp có |
-| Tính toán | Chargeable weight hàng air | Sắp có |
-| Tính toán | Cước LCL theo W/M | Sắp có |
+| Tính toán | CBM & quy đổi đơn vị | Dùng được |
+| Tính toán | Chargeable weight hàng air | Dùng được |
+| Tính toán | Cước LCL theo W/M | Dùng được |
 | Tính toán | Xếp hàng vào container, có mô phỏng 3D | Sắp có |
-| Kiểm tra & tra cứu | Kiểm tra số container (ISO 6346) | Sắp có |
+| Kiểm tra & tra cứu | Kiểm tra số container (ISO 6346) | Dùng được |
 | Kiểm tra & tra cứu | Tra cứu Incoterms 2020 | Sắp có |
 | Kiểm tra & tra cứu | Tra cứu mã HS code và thuế suất | Sắp có |
 | Từ điển | Thuật ngữ & viết tắt logistics | Sắp có |
