@@ -12,6 +12,8 @@
   --text-soft: #8A8D7C; /* chỉ dùng cho nửa nhạt của tiêu đề lớn */
   --danger: #B3261E;
   --success: #3F6212;
+  --seller: #33420F;
+  --on-seller: #F3F0E4;
 
   /* Màu giữ nguyên ở cả hai chế độ */
   --accent: #D8F21C;
@@ -19,6 +21,9 @@
   --dark-block: linear-gradient(135deg, #1F2A0E, #5C6F16);
   --on-dark-block: #F3F0E4;
   --on-hero: #FFFFFF;
+  /* Thanh hành trình Incoterms: người mua dùng xanh chanh, người bán dùng xanh rêu */
+  --buyer: var(--accent);
+  --on-buyer: var(--on-accent);
   /* Khung giữ chỗ cho ảnh cảng chiều tối, thay bằng ảnh thật sau */
   --hero-placeholder: linear-gradient(180deg, #171D26 0%, #2C2F3A 42%, #7A4F45 72%, #C98A5A 90%);
   --hero-overlay: rgb(10 12 8 / 38%);
@@ -55,6 +60,7 @@
     --text-soft: #8B8F7C;
     --danger: #FF9C92;
     --success: #B7D66A;
+    --seller: #5F7624;
     --shadow-card: none;
     --shadow-pop: 0 12px 32px rgb(0 0 0 / 55%);
     --line-pop: #4A5538;
@@ -72,6 +78,7 @@
   --text-soft: #8B8F7C;
   --danger: #FF9C92;
   --success: #B7D66A;
+  --seller: #5F7624;
   --shadow-card: none;
   --shadow-pop: 0 12px 32px rgb(0 0 0 / 55%);
   --line-pop: #4A5538;

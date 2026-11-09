@@ -1,0 +1,335 @@
+{
+  "nguon": "Tóm tắt từ tài liệu học \"Tổng hợp Incoterms 2010–2020\" và \"Incoterm trong vận tải\", LOGNEKO viết lại bằng lời của mình. Incoterms là bộ quy tắc do Phòng Thương mại Quốc tế (ICC) phát hành; trang này không thay bản gốc của ICC.",
+  "cap_nhat": "2026-11-09",
+  "chang": [
+    { "id": "boc-kho-ban", "ten": "Bốc hàng tại kho người bán" },
+    { "id": "cho-noi-di", "ten": "Chở tới nơi đi (cảng, sân bay, ICD)" },
+    { "id": "thong-quan-xk", "ten": "Thông quan xuất khẩu" },
+    { "id": "phi-noi-di", "ten": "Phí tại nơi đi và bốc lên phương tiện chính" },
+    { "id": "cuoc-chinh", "ten": "Cước vận tải chính" },
+    { "id": "phi-noi-den", "ten": "Phí tại nơi đến và dỡ khỏi phương tiện chính" },
+    { "id": "thong-quan-nk", "ten": "Thông quan nhập khẩu, nộp thuế" },
+    { "id": "cho-kho-mua", "ten": "Chở về kho người mua" },
+    { "id": "do-kho-mua", "ten": "Dỡ hàng tại kho người mua" }
+  ],
+  "nhom": [
+    { "id": "moi-phuong-thuc", "ten": "Mọi phương thức vận tải" },
+    { "id": "bien", "ten": "Đường biển và thủy nội địa" }
+  ],
+  "loi_chung": [
+    "Không ghi phiên bản, ví dụ chỉ ghi \"FOB Saigon\": cần ghi thêm \"Incoterms 2020\" để hai bên hiểu cùng một bộ quy tắc.",
+    "Ghi nơi giao chung chung như \"Vietnam\" hay \"Port\": nơi giao càng cụ thể càng ít tranh cãi về chi phí và rủi ro.",
+    "Nghĩ Incoterms thay được hợp đồng: Incoterms chỉ chia nghĩa vụ, chi phí và rủi ro giao hàng; giá, thanh toán, chất lượng vẫn phải ghi trong hợp đồng."
+  ],
+  "dieu_kien": [
+    {
+      "ma": "EXW",
+      "ten_en": "Ex Works",
+      "ten_vi": "Giao tại xưởng",
+      "phuong_thuc": "moi-phuong-thuc",
+      "nhom_chu": "E",
+      "tom_tat": "Người bán để hàng sẵn tại cơ sở của mình; mọi việc còn lại do người mua lo. Nghĩa vụ người bán ít nhất trong 11 điều kiện.",
+      "cach_giao": [
+        {
+          "id": "kho-ban",
+          "ten": "Giao tại cơ sở người bán",
+          "giao_hang": "Hàng để sẵn tại cơ sở người bán, chưa bốc lên xe, chưa thông quan xuất khẩu.",
+          "chang": ["mua", "mua", "mua", "mua", "mua", "mua", "mua", "mua", "mua"],
+          "ghi_chu_chang": {
+            "boc-kho-ban": "Người bán không bắt buộc bốc hàng. Nếu người bán bốc giúp thì rủi ro lúc bốc vẫn thuộc người mua, trừ khi hợp đồng ghi khác.",
+            "thong-quan-xk": "Người mua tự làm thủ tục xuất khẩu; người bán chỉ hỗ trợ giấy tờ khi được nhờ."
+          },
+          "rui_ro": { "vi_tri": 0, "mo_ta": "Khi hàng được để sẵn cho người mua tại cơ sở người bán, trước khi bốc." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "mua", "muc": null, "ghi_chu": "Vì người mua chịu rủi ro cả hành trình." },
+      "cach_ghi": { "mau": "EXW + địa điểm giao tại cơ sở người bán + nước + Incoterms 2020", "vi_du": "EXW Song Than Industrial Park, Binh Duong, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Dùng EXW cho hàng xuất khẩu khi người mua ở nước ngoài khó tự làm thủ tục xuất khẩu tại nước người bán; khi đó FCA hợp hơn.",
+        "Nghĩ người bán phải bốc hàng lên xe: theo EXW, bốc hàng là việc của người mua nếu hợp đồng không ghi khác."
+      ],
+      "ghi_chu": "Thường chỉ thuận tiện khi người mua tự lo được việc ở nước người bán, ví dụ hai bên cùng một nước hoặc người mua có người đại diện tại đó."
+    },
+    {
+      "ma": "FCA",
+      "ten_en": "Free Carrier",
+      "ten_vi": "Giao cho người chuyên chở",
+      "phuong_thuc": "moi-phuong-thuc",
+      "nhom_chu": "F",
+      "tom_tat": "Người bán thông quan xuất khẩu rồi giao hàng cho người chở do người mua chỉ định, tại kho người bán hoặc tại một nơi khác đã thỏa thuận.",
+      "cach_giao": [
+        {
+          "id": "kho-ban",
+          "ten": "Giao tại kho người bán",
+          "giao_hang": "Người bán bốc hàng lên xe do người mua chỉ định ngay tại kho người bán, đã thông quan xuất khẩu.",
+          "chang": ["ban", "mua", "ban", "mua", "mua", "mua", "mua", "mua", "mua"],
+          "ghi_chu_chang": {
+            "boc-kho-ban": "Giao tại kho người bán thì người bán phải bốc hàng lên xe người mua gửi tới."
+          },
+          "rui_ro": { "vi_tri": 1, "mo_ta": "Khi hàng đã được bốc lên xe do người mua chỉ định tại kho người bán." }
+        },
+        {
+          "id": "cang",
+          "ten": "Giao tại cảng hoặc ICD",
+          "giao_hang": "Người bán tự chở hàng tới cảng hoặc ICD đã thỏa thuận và giao cho người chở do người mua chỉ định khi hàng còn trên xe, sẵn sàng dỡ.",
+          "chang": ["ban", "ban", "ban", "mua", "mua", "mua", "mua", "mua", "mua"],
+          "ghi_chu_chang": {
+            "phi-noi-di": "Người bán không phải dỡ hàng khỏi xe của mình. Thực tế phí THC đầu xuất hay được hai bên thỏa thuận riêng, nên ghi rõ trong hợp đồng."
+          },
+          "rui_ro": { "vi_tri": 2, "mo_ta": "Khi hàng tới nơi giao, còn trên xe của người bán, sẵn sàng để người chở dỡ xuống." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "mua", "muc": null, "ghi_chu": "Vì người mua chịu rủi ro từ lúc nhận hàng." },
+      "cach_ghi": { "mau": "FCA + nơi giao ở nước người bán + nước + Incoterms 2020", "vi_du": "FCA Tan Cang Song Than ICD, Binh Duong, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Không ghi rõ nơi giao là kho người bán hay cảng, ICD: hai cách giao khác nhau về việc ai bốc, ai dỡ và lúc nào rủi ro chuyển.",
+        "Chọn FOB cho hàng container trong khi hàng được giao cho hãng tàu ở bãi trước khi lên tàu; FCA phản ánh đúng điểm giao hơn."
+      ],
+      "ghi_chu": "Điểm mới của bản 2020: nếu thanh toán bằng L/C mà ngân hàng đòi vận đơn ghi \"on board\", hai bên có thể thỏa thuận để người mua dặn hãng vận tải cấp loại vận đơn này cho người bán, dù hàng được giao trước khi lên tàu."
+    },
+    {
+      "ma": "CPT",
+      "ten_en": "Carriage Paid To",
+      "ten_vi": "Cước phí trả tới",
+      "phuong_thuc": "moi-phuong-thuc",
+      "nhom_chu": "C",
+      "tom_tat": "Người bán thuê và trả cước chở hàng tới nơi đến, nhưng rủi ro chuyển sang người mua ngay khi hàng giao cho người chở đầu tiên.",
+      "cach_giao": [
+        {
+          "id": "nguoi-cho-dau-tien",
+          "ten": "Giao cho người chở đầu tiên",
+          "giao_hang": "Người bán giao hàng cho người chở đầu tiên do mình thuê, và trả cước tới nơi đến đã thỏa thuận.",
+          "chang": ["ban", "ban", "ban", "ban", "ban", "chia", "mua", "mua", "mua"],
+          "ghi_chu_chang": {
+            "phi-noi-den": "Người mua trả, trừ khi hợp đồng vận tải người bán ký đã gồm phí này."
+          },
+          "rui_ro": { "vi_tri": 2, "mo_ta": "Khi hàng giao cho người chở đầu tiên. Thanh vẽ trường hợp người chở nhận hàng tại cảng hoặc ICD đi; nếu người chở nhận ngay tại kho người bán thì rủi ro chuyển sớm hơn." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "mua", "muc": null, "ghi_chu": "Vì rủi ro chặng chính thuộc người mua." },
+      "cach_ghi": { "mau": "CPT + nơi đến ở nước người mua + nước + Incoterms 2020", "vi_du": "CPT Narita Airport, Japan, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Nghĩ rủi ro chuyển ở nơi đến vì người bán trả cước tới đó; thật ra rủi ro chuyển khi hàng giao cho người chở đầu tiên.",
+        "Người mua không mua bảo hiểm cho chặng chính dù mình chịu rủi ro chặng đó."
+      ],
+      "ghi_chu": "Nhóm C có hai điểm khác nhau: điểm chuyển rủi ro ở nước người bán, điểm hết chi phí cước ở nước người mua."
+    },
+    {
+      "ma": "CIP",
+      "ten_en": "Carriage and Insurance Paid To",
+      "ten_vi": "Cước phí và bảo hiểm trả tới",
+      "phuong_thuc": "moi-phuong-thuc",
+      "nhom_chu": "C",
+      "tom_tat": "Giống CPT, cộng thêm người bán phải mua bảo hiểm cho hàng tới nơi đến, mức tối thiểu ICC (A).",
+      "cach_giao": [
+        {
+          "id": "nguoi-cho-dau-tien",
+          "ten": "Giao cho người chở đầu tiên",
+          "giao_hang": "Người bán giao hàng cho người chở đầu tiên do mình thuê, trả cước và mua bảo hiểm tới nơi đến đã thỏa thuận.",
+          "chang": ["ban", "ban", "ban", "ban", "ban", "chia", "mua", "mua", "mua"],
+          "ghi_chu_chang": {
+            "phi-noi-den": "Người mua trả, trừ khi hợp đồng vận tải người bán ký đã gồm phí này."
+          },
+          "rui_ro": { "vi_tri": 2, "mo_ta": "Khi hàng giao cho người chở đầu tiên. Thanh vẽ trường hợp người chở nhận hàng tại cảng hoặc ICD đi; nếu người chở nhận ngay tại kho người bán thì rủi ro chuyển sớm hơn." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": true, "ai": "ban", "muc": "ICC (A)", "ghi_chu": "Người mua là bên được bồi thường, vì rủi ro chặng chính đã thuộc người mua." },
+      "cach_ghi": { "mau": "CIP + nơi đến ở nước người mua + nước + Incoterms 2020", "vi_du": "CIP Noi Bai Airport, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Mua bảo hiểm ICC (C) như CIF: từ bản 2020, CIP yêu cầu tối thiểu ICC (A).",
+        "Nghĩ có bảo hiểm thì người bán chịu rủi ro tới nơi đến; rủi ro vẫn chuyển khi hàng giao cho người chở đầu tiên."
+      ],
+      "ghi_chu": "Nhóm C có hai điểm khác nhau: điểm chuyển rủi ro ở nước người bán, điểm hết chi phí cước ở nước người mua."
+    },
+    {
+      "ma": "DAP",
+      "ten_en": "Delivered at Place",
+      "ten_vi": "Giao tại nơi đến",
+      "phuong_thuc": "moi-phuong-thuc",
+      "nhom_chu": "D",
+      "tom_tat": "Người bán chở hàng tới nơi đến ở nước người mua, hàng còn trên phương tiện chưa dỡ; người mua lo thông quan nhập khẩu và dỡ hàng.",
+      "cach_giao": [
+        {
+          "id": "noi-den",
+          "ten": "Giao tại nơi đến, chưa dỡ",
+          "giao_hang": "Người bán đưa hàng tới nơi đến đã thỏa thuận, hàng còn trên phương tiện, sẵn sàng để người mua dỡ.",
+          "chang": ["ban", "ban", "ban", "ban", "ban", "ban", "mua", "ban", "mua"],
+          "ghi_chu_chang": {
+            "phi-noi-den": "Người bán lo cước tới nơi đến; phí dỡ khỏi phương tiện chính nếu chưa nằm trong cước thì hai bên thỏa thuận rõ."
+          },
+          "rui_ro": { "vi_tri": 8, "mo_ta": "Khi hàng tới nơi đến, còn trên phương tiện, sẵn sàng để dỡ." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "ban", "muc": null, "ghi_chu": "Vì người bán chịu rủi ro tới nơi đến." },
+      "cach_ghi": { "mau": "DAP + nơi giao ở nước người mua + nước + Incoterms 2020", "vi_du": "DAP Long Hau Industrial Park, Long An, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Không ghi rõ địa chỉ nơi giao, dễ tranh cãi ai trả phí tại cảng đến và phí chở tiếp.",
+        "Nghĩ người bán phải dỡ hàng: theo DAP, dỡ hàng là việc của người mua; muốn người bán dỡ thì dùng DPU."
+      ],
+      "ghi_chu": "Thanh vẽ nơi đến là kho người mua. Nếu hợp đồng ghi nơi đến là cảng đến, phần sau cảng do người mua lo."
+    },
+    {
+      "ma": "DPU",
+      "ten_en": "Delivered at Place Unloaded",
+      "ten_vi": "Giao tại nơi đến đã dỡ hàng",
+      "phuong_thuc": "moi-phuong-thuc",
+      "nhom_chu": "D",
+      "tom_tat": "Người bán chở hàng tới nơi đến ở nước người mua và dỡ xong; người mua lo thông quan nhập khẩu. Đây là điều kiện duy nhất người bán phải dỡ hàng tại nơi đến.",
+      "cach_giao": [
+        {
+          "id": "noi-den",
+          "ten": "Giao tại nơi đến, đã dỡ",
+          "giao_hang": "Người bán đưa hàng tới nơi đến đã thỏa thuận và dỡ hàng xuống.",
+          "chang": ["ban", "ban", "ban", "ban", "ban", "ban", "mua", "ban", "ban"],
+          "ghi_chu_chang": {
+            "phi-noi-den": "Người bán lo cước tới nơi đến; phí dỡ khỏi phương tiện chính nếu chưa nằm trong cước thì hai bên thỏa thuận rõ."
+          },
+          "rui_ro": { "vi_tri": 9, "mo_ta": "Khi hàng đã được dỡ xuống tại nơi đến." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "ban", "muc": null, "ghi_chu": "Vì người bán chịu rủi ro tới khi dỡ xong." },
+      "cach_ghi": { "mau": "DPU + nơi giao ở nước người mua + nước + Incoterms 2020", "vi_du": "DPU VSIP Industrial Park, Binh Duong, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Còn ghi DAT: bản 2020 đã đổi DAT thành DPU, và nơi giao không còn bắt buộc là bến (terminal).",
+        "Chọn DPU khi người bán không có cách dỡ hàng tại nơi đến; khi đó DAP hợp hơn."
+      ],
+      "ghi_chu": "Thanh vẽ nơi đến là kho người mua. Nếu hợp đồng ghi nơi đến là cảng đến, phần sau cảng do người mua lo."
+    },
+    {
+      "ma": "DDP",
+      "ten_en": "Delivered Duty Paid",
+      "ten_vi": "Giao hàng đã nộp thuế",
+      "phuong_thuc": "moi-phuong-thuc",
+      "nhom_chu": "D",
+      "tom_tat": "Người bán lo gần như mọi thứ: chở hàng tới nơi đến, thông quan cả xuất lẫn nhập khẩu và nộp thuế; người mua chỉ dỡ hàng. Nghĩa vụ người bán nhiều nhất trong 11 điều kiện.",
+      "cach_giao": [
+        {
+          "id": "noi-den",
+          "ten": "Giao tại nơi đến, đã nộp thuế",
+          "giao_hang": "Người bán đưa hàng tới nơi đến đã thỏa thuận, đã thông quan nhập khẩu và nộp thuế, hàng còn trên phương tiện chưa dỡ.",
+          "chang": ["ban", "ban", "ban", "ban", "ban", "ban", "ban", "ban", "mua"],
+          "ghi_chu_chang": {
+            "phi-noi-den": "Người bán lo cước tới nơi đến; phí dỡ khỏi phương tiện chính nếu chưa nằm trong cước thì hai bên thỏa thuận rõ.",
+            "thong-quan-nk": "Gồm thuế nhập khẩu và các thuế khâu nhập như VAT."
+          },
+          "rui_ro": { "vi_tri": 8, "mo_ta": "Khi hàng tới nơi đến, đã thông quan nhập khẩu, còn trên phương tiện, sẵn sàng để dỡ." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "ban", "muc": null, "ghi_chu": "Vì người bán chịu rủi ro tới nơi đến." },
+      "cach_ghi": { "mau": "DDP + nơi giao ở nước người mua + nước + Incoterms 2020", "vi_du": "DDP Thang Long Industrial Park, Hanoi, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Dùng DDP khi người bán không đứng tên khai và nộp thuế nhập khẩu được ở nước người mua.",
+        "Quên rằng thuế nhập khẩu và VAT khâu nhập cũng thuộc người bán, làm giá báo bị thiếu."
+      ],
+      "ghi_chu": "Thanh vẽ nơi đến là kho người mua. Nếu hợp đồng ghi nơi đến là cảng đến, phần sau cảng do người mua lo."
+    },
+    {
+      "ma": "FAS",
+      "ten_en": "Free Alongside Ship",
+      "ten_vi": "Giao dọc mạn tàu",
+      "phuong_thuc": "bien",
+      "nhom_chu": "F",
+      "tom_tat": "Người bán lo xong thủ tục xuất khẩu và mang hàng ra sát bên tàu ở cảng đi; từ khâu cẩu hàng lên tàu trở đi là việc của người mua.",
+      "cach_giao": [
+        {
+          "id": "doc-man-tau",
+          "ten": "Giao dọc mạn tàu",
+          "giao_hang": "Hàng đã thông quan xuất khẩu, nằm trên cầu cảng hoặc sà lan sát bên con tàu mà người mua báo, chưa cẩu lên tàu.",
+          "chang": ["ban", "ban", "ban", "chia", "mua", "mua", "mua", "mua", "mua"],
+          "ghi_chu_chang": {
+            "phi-noi-di": "Người bán lo tới khi hàng nằm dọc mạn tàu; việc bốc lên tàu do người mua."
+          },
+          "rui_ro": { "vi_tri": 3.5, "mo_ta": "Khi hàng đã đặt dọc mạn tàu tại cảng xếp hàng." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "mua", "muc": null, "ghi_chu": "Vì người mua chịu rủi ro từ mạn tàu." },
+      "cach_ghi": { "mau": "FAS + cảng xếp hàng + nước + Incoterms 2020", "vi_du": "FAS Cai Mep Port, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Dùng FAS cho hàng container: hàng container thường giao cho hãng tàu ở bãi trước khi lên tàu, nên FCA hợp hơn.",
+        "Dùng FAS cho đường bộ hay hàng air: FAS chỉ dành cho đường biển và thủy nội địa."
+      ],
+      "ghi_chu": "Rủi ro và chi phí cùng chuyển sang người mua tại một điểm: lúc hàng đã nằm dọc mạn tàu ở cảng xếp hàng."
+    },
+    {
+      "ma": "FOB",
+      "ten_en": "Free On Board",
+      "ten_vi": "Giao lên tàu",
+      "phuong_thuc": "bien",
+      "nhom_chu": "F",
+      "tom_tat": "Người bán thông quan xuất khẩu và đưa hàng lên con tàu người mua chỉ định tại cảng xếp hàng; người mua thuê tàu, trả cước và lo các chặng sau.",
+      "cach_giao": [
+        {
+          "id": "tren-tau",
+          "ten": "Giao lên tàu",
+          "giao_hang": "Hàng đã thông quan xuất khẩu và đã được xếp xong lên con tàu mà người mua thuê, ở cảng đi ghi trong hợp đồng.",
+          "chang": ["ban", "ban", "ban", "ban", "mua", "mua", "mua", "mua", "mua"],
+          "ghi_chu_chang": {},
+          "rui_ro": { "vi_tri": 4, "mo_ta": "Khi hàng đã nằm trên tàu tại cảng xếp hàng." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "mua", "muc": null, "ghi_chu": "Vì người mua chịu rủi ro từ lúc hàng lên tàu." },
+      "cach_ghi": { "mau": "FOB + cảng xếp hàng + nước + Incoterms 2020", "vi_du": "FOB Cat Lai Port, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Dùng FOB cho hàng container: người bán giao cont cho hãng tàu ở bãi, không còn kiểm soát việc bốc lên tàu nhưng vẫn chịu rủi ro tới lúc hàng lên tàu. FCA hợp hơn.",
+        "Dùng FOB cho hàng air hoặc đường bộ: FOB chỉ dành cho đường biển và thủy nội địa.",
+        "Còn nói rủi ro chuyển khi hàng \"qua lan can tàu\": cách nói này đã bỏ từ bản 2010; từ đó tới bản 2020 đều tính từ lúc hàng đã nằm trên tàu."
+      ],
+      "ghi_chu": "Rủi ro và chi phí cùng chuyển sang người mua tại một điểm: lúc hàng đã lên tàu ở cảng xếp hàng."
+    },
+    {
+      "ma": "CFR",
+      "ten_en": "Cost and Freight",
+      "ten_vi": "Tiền hàng và cước phí",
+      "phuong_thuc": "bien",
+      "nhom_chu": "C",
+      "tom_tat": "Người bán đưa hàng lên tàu và trả cước tới cảng đến, nhưng rủi ro chuyển sang người mua ngay khi hàng đã lên tàu ở cảng xếp hàng.",
+      "cach_giao": [
+        {
+          "id": "tren-tau",
+          "ten": "Giao lên tàu",
+          "giao_hang": "Người bán đưa hàng lên tàu tại cảng xếp hàng, đã thông quan xuất khẩu, và trả cước tới cảng đến.",
+          "chang": ["ban", "ban", "ban", "ban", "ban", "chia", "mua", "mua", "mua"],
+          "ghi_chu_chang": {
+            "phi-noi-den": "Người mua trả, trừ khi hợp đồng vận tải người bán ký đã gồm phí này."
+          },
+          "rui_ro": { "vi_tri": 4, "mo_ta": "Khi hàng đã nằm trên tàu tại cảng xếp hàng, dù cước đã trả tới cảng đến." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": false, "ai": "mua", "muc": null, "ghi_chu": "Vì rủi ro chặng biển thuộc người mua." },
+      "cach_ghi": { "mau": "CFR + cảng đến + nước + Incoterms 2020", "vi_du": "CFR Busan Port, Korea, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Nghĩ rủi ro chuyển ở cảng đến vì người bán trả cước tới đó; thật ra rủi ro chuyển khi hàng đã lên tàu ở cảng xếp hàng.",
+        "Dùng CFR cho hàng container thay vì CPT, vì hàng container được giao cho hãng tàu ở bãi trước khi lên tàu."
+      ],
+      "ghi_chu": "Nhóm C có hai điểm khác nhau: điểm chuyển rủi ro ở nước người bán, điểm hết chi phí cước ở nước người mua."
+    },
+    {
+      "ma": "CIF",
+      "ten_en": "Cost, Insurance and Freight",
+      "ten_vi": "Tiền hàng, bảo hiểm và cước phí",
+      "phuong_thuc": "bien",
+      "nhom_chu": "C",
+      "tom_tat": "Giống CFR, cộng thêm người bán phải mua bảo hiểm cho hàng tới cảng đến, mức tối thiểu ICC (C).",
+      "cach_giao": [
+        {
+          "id": "tren-tau",
+          "ten": "Giao lên tàu",
+          "giao_hang": "Người bán đưa hàng lên tàu tại cảng xếp hàng, đã thông quan xuất khẩu, trả cước và mua bảo hiểm tới cảng đến.",
+          "chang": ["ban", "ban", "ban", "ban", "ban", "chia", "mua", "mua", "mua"],
+          "ghi_chu_chang": {
+            "phi-noi-den": "Người mua trả, trừ khi hợp đồng vận tải người bán ký đã gồm phí này."
+          },
+          "rui_ro": { "vi_tri": 4, "mo_ta": "Khi hàng đã nằm trên tàu tại cảng xếp hàng, dù cước và bảo hiểm đã trả tới cảng đến." }
+        }
+      ],
+      "bao_hiem": { "bat_buoc": true, "ai": "ban", "muc": "ICC (C)", "ghi_chu": "Người mua là bên được bồi thường, vì rủi ro chặng biển đã thuộc người mua." },
+      "cach_ghi": { "mau": "CIF + cảng đến + nước + Incoterms 2020", "vi_du": "CIF Cat Lai Port, Vietnam, Incoterms 2020" },
+      "loi_hay_gap": [
+        "Nghĩ người bán chịu rủi ro tới cảng đến: rủi ro chuyển khi hàng đã lên tàu ở cảng xếp hàng, bảo hiểm chỉ giúp người mua đòi bồi thường khi có tổn thất.",
+        "Dùng CIF cho hàng container hoặc hàng air thay vì CIP.",
+        "Nghĩ CIF cũng phải mua ICC (A) như CIP: CIF chỉ yêu cầu tối thiểu ICC (C)."
+      ],
+      "ghi_chu": "Nhóm C có hai điểm khác nhau: điểm chuyển rủi ro ở nước người bán, điểm hết chi phí cước ở nước người mua."
+    }
+  ]
+}

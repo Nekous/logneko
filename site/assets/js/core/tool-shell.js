@@ -127,7 +127,7 @@ function readFields(items) {
   return { values, missing, invalid };
 }
 
-function createCopyButton(getText) {
+export function createCopyButton(getText) {
   const button = el('button', 'btn btn--primary', 'Copy kết quả');
   button.type = 'button';
   const status = el('span', 'tool-status');

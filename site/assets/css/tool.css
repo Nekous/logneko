@@ -527,3 +527,399 @@ html { scroll-padding-bottom: 64px; }
     overflow-y: auto;
   }
 }
+
+/* Trang Incoterms: khung chọn ở trên, kết quả ở dưới, cả hai rộng hết trang */
+.ict-layout {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* Tiêu đề phụ dùng thẻ h2, h3 cho đúng cấp nhưng giữ chữ thường nhỏ */
+.ict-pick-title,
+.ict-sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.ict-pick-title + .ict-groups { margin-top: 8px; }
+
+.ict-toggle + .ict-pick-title,
+.ict-groups + .ict-toggle { margin-top: 16px; }
+
+.ict-groups {
+  display: grid;
+  gap: 12px;
+}
+
+.ict-group-name {
+  margin-bottom: 6px;
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+.ict-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ict-chip {
+  min-width: 58px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.ict-chip--wide {
+  font-size: var(--size-small);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.ict-chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.ict-chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ict-hint { margin-top: 12px; }
+
+.ict-muted {
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+/* Đầu thẻ kết quả: mã lớn, tên tiếng Anh và tiếng Việt, nhóm chữ */
+.ict-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+}
+
+.ict-code { font-size: 2.75rem; }
+
+.ict-names { min-width: 0; }
+
+.ict-name-en { font-weight: 500; }
+
+.ict-name-vi {
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+.ict-title .badge { margin-left: auto; }
+
+.ict-lead,
+.ict-ways { margin-top: 12px; }
+
+.ict-compare-title { font-size: 1.75rem; }
+
+.ict-view > .ict-sub { margin-top: 24px; }
+
+/* Xem một mã trên máy tính: giữ dòng chữ vừa tầm mắt, không kéo dài hết thẻ */
+.ict-view.is-single { max-width: 800px; }
+
+.ict-sub + .ict-strip,
+.ict-sub + .ict-journey { margin-top: 12px; }
+
+/* Dải hành trình: 9 ô, vạch rủi ro nằm trên dải */
+.ict-strip {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 3px;
+  padding-top: 24px;
+}
+
+.ict-cell {
+  display: grid;
+  place-items: center;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.ict-cell:first-child { border-radius: 10px 6px 6px 10px; }
+.ict-cell:nth-child(9) { border-radius: 6px 10px 10px 6px; }
+
+.ict-cell.is-ban,
+.ict-swatch.is-ban {
+  background: var(--seller);
+  color: var(--on-seller);
+}
+
+.ict-cell.is-mua,
+.ict-swatch.is-mua {
+  background: var(--buyer);
+  color: var(--on-buyer);
+  /* Xanh chanh trên thẻ trắng có ranh giới nhạt, thêm viền mảnh màu rêu */
+  box-shadow: inset 0 0 0 1px rgb(51 66 15 / 28%);
+}
+
+/* Ô chia hai bên: sọc chéo hai màu, số nằm trên nền thẻ cho dễ đọc */
+.ict-cell.is-chia {
+  background: repeating-linear-gradient(135deg, var(--seller) 0 6px, var(--buyer) 6px 12px);
+  color: var(--text);
+}
+
+/* Số nằm trên vạch rủi ro, để vạch giữa ô (FAS) không cắt ngang chữ số */
+.ict-cell-num {
+  position: relative;
+  z-index: 1;
+}
+
+.ict-cell.is-chia .ict-cell-num {
+  padding: 0 5px;
+  border-radius: 4px;
+  background: var(--card);
+}
+
+.ict-risk {
+  position: absolute;
+  z-index: 0;
+  top: 20px;
+  bottom: -4px;
+  width: 0;
+  border-left: 2px solid var(--danger);
+}
+
+.ict-risk-label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  transform: translateX(-50%);
+  color: var(--danger);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+/* Vạch sát mép thì nhãn quay vào trong, không tràn khỏi thẻ */
+.ict-risk.is-start .ict-risk-label { transform: translateX(4px); }
+.ict-risk.is-end .ict-risk-label { transform: translateX(calc(-100% - 4px)); }
+
+.ict-journey + .ict-journey { margin-top: 16px; }
+
+.ict-journey-name {
+  font-size: var(--size-small);
+  font-weight: 500;
+}
+
+.ict-journey-name + .ict-strip { margin-top: 4px; }
+
+.ict-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.ict-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ict-swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.ict-swatch.is-chia { background: repeating-linear-gradient(135deg, var(--seller) 0 3px, var(--buyer) 3px 6px); }
+
+.ict-swatch.is-risk {
+  width: 2px;
+  border-radius: 0;
+  background: var(--danger);
+}
+
+/* Danh sách chặng dưới dải: tên chặng bên trái, ai trả bên phải */
+.ict-steps {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ict-step {
+  padding-block: 8px;
+  border-top: 1px solid var(--line);
+  font-size: var(--size-small);
+}
+
+.ict-step-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.ict-step-line .ict-swatch { transform: translateY(2px); }
+
+.ict-step-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.ict-step-who {
+  flex: none;
+  font-weight: 500;
+  text-align: right;
+}
+
+.ict-step-note {
+  margin-top: 2px;
+  padding-left: 24px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.ict-step-risk {
+  padding: 8px 0 8px 12px;
+  border-top: 1px solid var(--line);
+  border-left: 2px solid var(--danger);
+  font-size: var(--size-small);
+}
+
+.ict-step-risk strong {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* Bảng tóm tắt và bảng so sánh: nhãn nằm trên, giá trị nằm dưới, để câu dài không bị bẻ vụn */
+.ict-rows,
+.ict-compare { margin-top: 12px; }
+
+.ict-rows > div,
+.ict-cmp-row {
+  display: grid;
+  gap: 2px 16px;
+  padding-block: 8px;
+  border-top: 1px solid var(--line);
+  font-size: var(--size-small);
+}
+
+.ict-rows dt,
+.ict-cmp-label { color: var(--text-muted); }
+
+.ict-rows dd { font-weight: 500; }
+
+.ict-row-note {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.ict-example {
+  margin-top: 6px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--bg);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.ict-list {
+  margin-top: 8px;
+  padding-left: 1.25em;
+  font-size: var(--size-small);
+  list-style: disc;
+}
+
+.ict-list li + li { margin-top: 6px; }
+
+.ict-actions { margin-top: 20px; }
+
+/* Nhãn "Khác" đứng ngay sau chữ, kể cả khi tên tiêu chí xuống dòng */
+.ict-diff {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.ict-cmp-val {
+  display: grid;
+  grid-template-columns: 3.5em 1fr;
+  gap: 0 8px;
+  font-weight: 500;
+}
+
+.ict-cmp-val .ict-row-note { grid-column: 2; }
+
+.ict-cmp-code {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.ict-cmp-row:not(.is-diff) .ict-cmp-val { font-weight: 400; }
+
+.ict-cmp-head { display: none; }
+
+/* Chỉ báo cho trình đọc màn hình, không hiện trên trang */
+.ict-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .ict-rows > div { grid-template-columns: minmax(160px, 30%) 1fr; }
+
+  .ict-cmp-row { grid-template-columns: minmax(160px, 26%) 1fr 1fr; }
+
+  .ict-cmp-head {
+    display: grid;
+    font-weight: 600;
+  }
+
+  /* Đã có hàng tên cột thì giấu mã trong từng ô, trình đọc màn hình vẫn đọc */
+  .ict-cmp-val { grid-template-columns: 1fr; }
+
+  .ict-cmp-val .ict-row-note { grid-column: 1; }
+
+  .ict-cmp-code {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+@media (min-width: 860px) {
+  .ict-layout {
+    gap: 24px;
+    margin-top: 32px;
+  }
+}
