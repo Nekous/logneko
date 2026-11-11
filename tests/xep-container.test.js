@@ -287,3 +287,14 @@ test('Three.js nằm trong vendor kèm giấy phép, trang chỉ tải khi cần
   const html = readFileSync(new URL('../site/tools/xep-container.html', import.meta.url), 'utf8');
   assert.ok(!html.includes('vendor/'));
 });
+
+test('bản Three.js rút gọn có đủ các phần ghi trong entry.js (thêm phần mới thì phải dựng lại)', () => {
+  const entry = readFileSync(new URL('../scripts/three-logneko/entry.js', import.meta.url), 'utf8');
+  const can = [...entry.matchAll(/^\s+(\w+),?$/gm)].map((match) => match[1]);
+  can.push('OrbitControls');
+  assert.ok(can.includes('CanvasTexture') && can.includes('WebGLRenderer'));
+  const bundle = readFileSync(new URL('../site/assets/js/vendor/three/three-logneko.min.js', import.meta.url), 'utf8');
+  const exportList = bundle.match(/export\{([^}]*)\}/)[1];
+  const co = exportList.split(',').map((item) => item.split(' as ').pop());
+  for (const ten of can) assert.ok(co.includes(ten), `thiếu ${ten} trong bản rút gọn`);
+});

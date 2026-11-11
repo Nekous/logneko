@@ -2,7 +2,9 @@
 // Dựng lại: xem README.md cùng thư mục.
 export {
   AmbientLight,
+  BackSide,
   BoxGeometry,
+  CanvasTexture,
   Color,
   DirectionalLight,
   DoubleSide,
@@ -18,7 +20,9 @@ export {
   MeshLambertMaterial,
   PerspectiveCamera,
   PlaneGeometry,
+  RepeatWrapping,
   Scene,
+  SRGBColorSpace,
   Vector3,
   WebGLRenderer,
 } from 'three';

@@ -11,6 +11,6 @@ npx esbuild entry.js --bundle --minify --format=esm --legal-comments=none --outf
 cp node_modules/three/LICENSE <thư mục dự án>/site/assets/js/vendor/three/LICENSE.txt
 ```
 
-Bản hiện tại: 555 KB, nén gzip còn khoảng 140 KB.
+Bản hiện tại: 555 KB, nén gzip còn khoảng 138 KB.
 
 Khung 3D cần thêm phần nào của Three.js thì thêm vào `entry.js` rồi dựng lại.
