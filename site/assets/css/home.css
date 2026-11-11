@@ -35,10 +35,176 @@
   padding-block: 104px 104px;
 }
 
-.hero-copy p {
+.hero-copy > p {
   max-width: 34rem;
   margin-block: 16px 24px;
 }
+
+/* Ô tìm kiếm chung */
+.search {
+  max-width: 34rem;
+  margin-bottom: 24px;
+}
+
+.search-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: var(--size-small);
+  font-weight: 500;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding-inline: 18px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  color: var(--text-muted);
+}
+
+.search-box:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.search-box svg { flex: none; }
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.search-input:focus { outline: none; }
+
+.search-input::placeholder { color: var(--text-muted); }
+
+.search-hint {
+  margin-top: 8px;
+  font-size: 0.8125rem;
+  opacity: 0.85;
+}
+
+.search-panel {
+  position: relative;
+  margin-top: 12px;
+  padding: 8px;
+  border: 1px solid var(--line-pop);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  color: var(--text);
+  box-shadow: var(--shadow-pop);
+}
+
+.search-count,
+.search-note {
+  padding: 8px 10px;
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+/* Có kết quả thì dòng đếm chỉ để trình đọc màn hình đọc, tiêu đề nhóm đã đủ cho mắt */
+.search-count.is-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.search-group + .search-group {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.search-group-title {
+  padding: 8px 10px 4px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.search-list {
+  padding: 0;
+  list-style: none;
+}
+
+.search-item { padding: 2px 0; }
+
+.search-main {
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Mũi tên cho biết dòng bấm được; dòng Sắp có không có. */
+a.search-main {
+  position: relative;
+  padding-right: 36px;
+}
+
+a.search-main::after {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  color: var(--text-muted);
+  transform: translateY(-50%);
+}
+
+a.search-main:hover { background: var(--bg); }
+
+.search-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+}
+
+.search-title { font-weight: 600; }
+
+.search-sub,
+.search-desc {
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+.search-extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 10px 8px;
+}
+
+.search-chip,
+.search-all {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 4px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  font-size: var(--size-small);
+  text-decoration: none;
+}
+
+.search-chip:hover,
+.search-all:hover { background: var(--bg); }
+
+.search-all { margin: 4px 10px 8px; }
 
 /* Thẻ minh họa công cụ CBM, chưa tính được */
 .demo-card {
@@ -92,6 +258,12 @@
   }
 
   .demo-card { justify-self: end; }
+
+  /* Đang có kết quả tìm thì thẻ minh họa đứng yên ở trên, không trôi theo độ dài danh sách. */
+  .hero-inner:has(.search-panel:not([hidden])) .demo-card {
+    align-self: start;
+    margin-top: 24px;
+  }
 
   .hero-scene { height: 200px; }
 }

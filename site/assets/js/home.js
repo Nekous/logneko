@@ -1,5 +1,6 @@
-// Trang chủ: danh sách 8 công cụ có xem trước, và dải con số.
+// Trang chủ: ô tìm kiếm chung, danh sách 8 công cụ có xem trước, và dải con số.
 import { isLive, loadTools, statsFor, toolHref } from './core/tools.js';
+import { mountSearch } from './tim-kiem.js';
 
 const narrowScreen = matchMedia('(max-width: 859px)');
 
@@ -85,8 +86,15 @@ function renderStats(data) {
   }
 }
 
+const data = await loadTools().catch((error) => {
+  console.error(error);
+  return null;
+});
+// Thiếu danh sách công cụ thì ô tìm vẫn tra được Incoterms và từ điển.
+mountSearch(document.getElementById('tim-kiem'), data?.cong_cu ?? []);
+
 try {
-  const data = await loadTools();
+  if (!data) throw new Error('Không có danh sách công cụ');
   renderTools(data);
   renderStats(data);
 } catch (error) {

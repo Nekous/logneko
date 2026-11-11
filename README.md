@@ -2,6 +2,8 @@
 
 Website miễn phí gom 8 công cụ tính toán và tra cứu cho sinh viên và người đi làm trong ngành logistics. Kết quả hiện ngay khi nhập, và có nút "Xem cách tính" để xem công thức từng bước.
 
+Trang chủ có ô tìm kiếm chung: gõ FOB, THC, mã HS hay số container là ra đúng công cụ và kết quả.
+
 > Dùng thử: https://logneko.netlify.app. Hiện có 6/8 công cụ, các công cụ còn lại đang được xây dựng.
 
 ## Các công cụ
