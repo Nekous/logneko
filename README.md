@@ -2,7 +2,7 @@
 
 Website miễn phí gom 8 công cụ tính toán và tra cứu cho sinh viên và người đi làm trong ngành logistics. Kết quả hiện ngay khi nhập, và có nút "Xem cách tính" để xem công thức từng bước.
 
-> Dùng thử: https://logneko.netlify.app. Hiện có 5/8 công cụ, các công cụ còn lại đang được xây dựng.
+> Dùng thử: https://logneko.netlify.app. Hiện có 6/8 công cụ, các công cụ còn lại đang được xây dựng.
 
 ## Các công cụ
 
@@ -15,7 +15,7 @@ Website miễn phí gom 8 công cụ tính toán và tra cứu cho sinh viên v�
 | Kiểm tra & tra cứu | Kiểm tra số container (ISO 6346) | Dùng được |
 | Kiểm tra & tra cứu | Tra cứu Incoterms 2020 | Dùng được |
 | Kiểm tra & tra cứu | Tra cứu mã HS code và thuế suất | Sắp có |
-| Từ điển | Thuật ngữ & viết tắt logistics | Sắp có |
+| Từ điển | Thuật ngữ & viết tắt logistics | Dùng được |
 
 ## Công nghệ
 
