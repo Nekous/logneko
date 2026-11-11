@@ -1,5 +1,5 @@
 // Trang công cụ CBM: danh sách kiện, ô Tổng GW và cách hiện kết quả.
-import { calculateCbm, cbmCopyText, cbmSteps, chuaTinhText, formatCbm, lineLabel } from '../calc/cbm.js';
+import { calculateCbm, cbmCopyText, cbmSteps, chuaTinhText, formatCbm, lineLabel, xepContainerData } from '../calc/cbm.js';
 import { formatNumber } from '../core/format.js';
 import { renderPackageList, showNumber } from '../core/package-list.js';
 import { createField, mountTool, readNumberField } from '../core/tool-shell.js';
@@ -111,6 +111,10 @@ await mountTool({
       gw: value.gwKg,
       ghiChuChuyen: value.chuaTinh.length > 0 ? `Tổng CBM chưa gồm dòng ${value.chuaTinh.join(', ')} vì chưa đủ số.` : '',
     }),
+  }, {
+    den: 'xep-container',
+    nhan: 'Xếp vào container',
+    data: xepContainerData,
   }],
   stickyTotal: (value) => {
     const rest = value.chuaTinh.length > 0 ? `, chưa tính dòng ${value.chuaTinh.join(', ')}` : '';

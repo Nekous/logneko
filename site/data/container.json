@@ -1,0 +1,45 @@
+{
+  "ghi_chu": "Số liệu tham khảo, đối chiếu với hãng tàu. Mỗi hãng và đời vỏ khác nhau một chút. Kích thước lòng và cửa tính bằng cm; tải trọng hàng tính bằng kg.",
+  "nguon": "bảng thông số container tham khảo do LOGNEKO tổng hợp",
+  "ngay_cap_nhat": "02/11/2026",
+  "loai": [
+    {
+      "id": "20gp",
+      "ten": "20'GP",
+      "long": { "dai": 590, "rong": 235, "cao": 239 },
+      "cua": { "rong": 234, "cao": 228 },
+      "the_tich_cbm": 33,
+      "vo_tan": "2,2–2,3",
+      "max_gross_tan": 30.48,
+      "tai_trong_hang_kg": 28000,
+      "ngoai_m": "6,06 × 2,44 × 2,59"
+    },
+    {
+      "id": "40gp",
+      "ten": "40'GP",
+      "long": { "dai": 1203, "rong": 235, "cao": 239 },
+      "cua": { "rong": 234, "cao": 228 },
+      "the_tich_cbm": 67,
+      "vo_tan": "3,7–3,8",
+      "max_gross_tan": 32.5,
+      "tai_trong_hang_kg": 28500,
+      "ngoai_m": "12,19 × 2,44 × 2,59"
+    },
+    {
+      "id": "40hc",
+      "ten": "40'HC",
+      "long": { "dai": 1203, "rong": 235, "cao": 270 },
+      "cua": { "rong": 234, "cao": 258 },
+      "the_tich_cbm": 76,
+      "vo_tan": "3,9–4,0",
+      "max_gross_tan": 32.5,
+      "tai_trong_hang_kg": 28500,
+      "ngoai_m": "12,19 × 2,44 × 2,90"
+    }
+  ],
+  "ows": {
+    "ap_dung": ["20gp"],
+    "nguong_tan": 18,
+    "ghi_chu": "Cont 20' chở hàng từ ngưỡng này trở lên (không tính vỏ) có thể bị phụ phí quá tải (OWS). Ngưỡng và mức phí tùy hãng."
+  }
+}

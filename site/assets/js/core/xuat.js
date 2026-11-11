@@ -36,7 +36,7 @@ export function chiaTrang(caoAnh, caoTrang, diemCat = []) {
 }
 
 // Mép trên và mép dưới của từng dòng, từng thẻ trong tờ xuất, tính bằng pixel của ảnh.
-const KHOI_CAT = 'li, dl > div, p, h1, .tool-total, .export-head';
+const KHOI_CAT = 'li, dl > div, p, h1, img, .tool-total, .export-head';
 function diemCatAnToan(sheet) {
   const goc = sheet.getBoundingClientRect().top;
   const diem = new Set();
@@ -90,6 +90,16 @@ function dungTo(tenCongCu, body, date) {
     if (details.open) details.querySelector(':scope > summary')?.remove();
     else details.remove();
   }
+  // Bản sao của hình vẽ (như khung 3D) không mang theo nét vẽ, nên thay bằng ảnh chụp đúng góc đang xem.
+  const goc = body.querySelectorAll('canvas');
+  content.querySelectorAll('canvas').forEach((canvas, index) => {
+    const img = el('img', 'export-canvas');
+    img.src = goc[index].toDataURL('image/png');
+    img.alt = goc[index].getAttribute('aria-label') ?? '';
+    canvas.replaceWith(img);
+  });
+  // Nút bấm và lời dặn thao tác không có nghĩa trên giấy.
+  for (const node of content.querySelectorAll('[data-xuat="bo"]')) node.remove();
   sheet.append(head, el('h1', 'export-title', tenCongCu), content, el('p', 'export-foot', `${WEB} · Kết quả chỉ để tham khảo.`));
   return sheet;
 }

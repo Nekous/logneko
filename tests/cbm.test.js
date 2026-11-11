@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { calculateCbm, cbmCopyText, cbmSteps, formatCbm, parsePackingList } from '../site/assets/js/calc/cbm.js';
+import { calculateCbm, cbmCopyText, cbmSteps, formatCbm, parsePackingList, xepContainerData } from '../site/assets/js/calc/cbm.js';
 import { formatNumber } from '../site/assets/js/core/format.js';
 
 const line = (soKien, dai, rong, cao, trongLuong = null) => ({ soKien, dai, rong, cao, trongLuong });
@@ -268,4 +268,38 @@ test('cách tính nêu đúng đơn vị khi nhập inch và lb', () => {
   assert.ok(steps.includes('2 × 5 = 10 lb'));
   assert.ok(steps.includes('10 × 0,45359237'));
   assert.ok(cbmCopyText(result).includes('10 lb'));
+});
+
+test('chuyển sang xếp container: một dòng, đổi ra cm và kg; tổng GW chia đều từng kiện', () => {
+  const metres = xepContainerData(calculateCbm({ kien: [line(10, 0.5, 0.4, 0.3, 22)], donViKichThuoc: 'm', donViTrongLuong: 'lb' }));
+  close(metres.dai, 50, 9);
+  close(metres.rong, 40, 9);
+  close(metres.cao, 30, 9);
+  close(metres.trongLuong, 22 * 0.45359237, 9);
+  assert.equal(metres.soThung, 10);
+  assert.equal(metres.ghiChuChuyen, '');
+
+  const tong = xepContainerData(calculateCbm({ kien: [line(4, 50, 40, 30)], tongGw: 100 }));
+  assert.equal(tong.trongLuong, 25);
+  assert.match(tong.ghiChuChuyen, /tổng GW chia số kiện/);
+
+  const none = xepContainerData(calculateCbm({ kien: [line(4, 50, 40, 30)] }));
+  assert.equal(none.trongLuong, null);
+});
+
+test('chuyển sang xếp container: còn dòng chưa đủ số thì không chia tổng GW', () => {
+  // Tổng GW gồm cả hàng của dòng gõ dở, chia cho 4 kiện dòng đầu sẽ ra số nặng hơn thật.
+  const data = xepContainerData(calculateCbm({ kien: [line(4, 50, 40, 30), line(2, 50, null, null)], tongGw: 100 }));
+  assert.equal(data.trongLuong, null);
+  assert.equal(data.soThung, 4);
+  assert.doesNotMatch(data.ghiChuChuyen, /tổng GW chia số kiện/);
+  assert.match(data.ghiChuChuyen, /chỉ nhận dòng đầu/);
+});
+
+test('chuyển sang xếp container: nhiều dòng thì chỉ lấy dòng đầu và ghi rõ', () => {
+  const data = xepContainerData(calculateCbm({ kien: LO_B, tongGw: 84 }));
+  assert.deepEqual([data.dai, data.rong, data.cao, data.soThung], [92, 61, 37, 2]);
+  // Tổng GW là của cả lô nhiều loại kiện, không chia cho dòng đầu.
+  assert.equal(data.trongLuong, null);
+  assert.match(data.ghiChuChuyen, /chỉ nhận dòng đầu/);
 });

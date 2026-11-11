@@ -94,8 +94,13 @@ test('Công cụ: khớp tên; công cụ sắp có không có link', () => {
   const container = nhom(tim('container'), 'cong-cu').dong;
   assert.deepEqual(container.map((dong) => dong.tieuDe).sort(), ['Kiểm tra số container', 'Xếp hàng vào container']);
   const xep = container.find((dong) => dong.tieuDe === 'Xếp hàng vào container');
-  assert.equal(xep.href, null);
-  assert.equal(xep.nhan, 'Sắp có');
+  assert.equal(xep.href, '/tools/xep-container.html');
+
+  // Công cụ nào đổi về sắp có thì mất link, chỉ còn nhãn.
+  const sapCo = NGUON.congCu.map((tool) => (tool.id === 'xep-container' ? { ...tool, trang_thai: 'sap-co' } : tool));
+  const dongSapCo = nhom(tim('container', { ...NGUON, congCu: sapCo }), 'cong-cu').dong.find((dong) => dong.tieuDe === 'Xếp hàng vào container');
+  assert.equal(dongSapCo.href, null);
+  assert.equal(dongSapCo.nhan, 'Sắp có');
 });
 
 test('Tên tiếng Việt không dấu tìm ra điều kiện Incoterms', () => {

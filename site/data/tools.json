@@ -32,7 +32,7 @@
       "id": "xep-container",
       "ten": "Xếp hàng vào container",
       "nhom": "Tính toán",
-      "trang_thai": "sap-co",
+      "trang_thai": "hoat-dong",
       "mo_ta": "Ước tính số thùng vừa một cont, kèm mô phỏng 3D.",
       "nhap": "Kích thước và trọng lượng thùng, số thùng, loại cont, số tầng chồng tối đa.",
       "ket_qua": "Số thùng mỗi cont, số cont cần, % thể tích và tải trọng, cảnh báo vượt tải."

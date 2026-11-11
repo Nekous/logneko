@@ -1132,6 +1132,13 @@ html { scroll-padding-bottom: 64px; }
   font-size: 1.75rem;
 }
 
+/* Ảnh chụp từ hình vẽ, như khung 3D, giữ đúng tỉ lệ */
+.export-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .export-foot {
   margin-top: 20px;
   padding-top: 12px;
@@ -1447,4 +1454,138 @@ html { scroll-padding-bottom: 64px; }
   .hs-taxes { grid-template-columns: repeat(3, 1fr); }
 
   .hs-chapter-title { font-size: 1.5rem; }
+}
+
+/* Xếp container: dài, rộng, cao một hàng; trọng lượng và số thùng một hàng */
+.xc-cells {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 8px;
+}
+
+.xc-cells--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.xc-cells .tool-field + .tool-field { margin-top: 0; }
+
+/* Nhãn dài xuống dòng thì các ô cùng hàng vẫn thẳng nhau */
+.xc-cells .tool-field {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  align-content: start;
+}
+
+.xc-cells .tool-field label { align-self: end; }
+
+.xc-cells .tool-input { padding-inline: 8px; }
+
+.xc-cells .tool-field-error,
+.xc-cells .tool-field-reading {
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
+.tool-custom > .xc-cells + .xc-cells,
+.tool-custom > .xc-cells + .tool-field { margin-top: 16px; }
+
+/* Nhắc OWS: không phải lỗi nên không tô đỏ, chỉ có vạch nhấn */
+.xc-nhac {
+  margin-top: 12px;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+  font-size: var(--size-small);
+}
+
+/* Khung 3D */
+.xc-3d { margin: 16px 0 0; }
+
+.xc-3d-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 260px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+}
+
+.xc-3d-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.xc-3d-stage canvas:active { cursor: grabbing; }
+
+/* Khung cắt phần tràn nên viền focus vẽ vào trong hình */
+.xc-3d-stage canvas:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: -4px;
+  border-radius: var(--radius-card);
+}
+
+.xc-3d-status {
+  padding: 16px;
+  color: var(--text-muted);
+  font-size: var(--size-small);
+  text-align: center;
+}
+
+.xc-3d-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 8px;
+}
+
+.xc-3d-tools[hidden] { display: none; }
+
+.xc-3d-hint,
+.xc-3d-note {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.xc-3d-note { margin-top: 8px; }
+
+.xc-3d-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.xc-3d-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.xc-3d-chip {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+.export-sheet .xc-3d-stage {
+  display: block;
+  height: auto;
+}
+
+/* Thu nhỏ hình 3D trên tờ xuất để kết quả gọn trong một trang A4 */
+.export-sheet .xc-3d-stage .export-canvas {
+  width: 70%;
+  margin: 0 auto;
+}
+
+@media (min-width: 860px) {
+  .xc-3d-stage { height: 340px; }
 }

@@ -4,7 +4,7 @@ import { formatNumber, parseNumber } from '../core/format.js';
 export const CM_PER_UNIT = { cm: 1, m: 100, inch: 2.54 };
 const CM3_PER_M3 = 1000000;
 const MAX_SIZE_CM = 10000;
-const KG_PER_LB = 0.45359237;
+export const KG_PER_LB = 0.45359237;
 const FT3_PER_M3 = 35.3147;
 
 const CBM_DISPLAY_FLOOR = 0.00005;
@@ -114,6 +114,32 @@ export function calculateCbm({ kien, donViKichThuoc = 'cm', donViTrongLuong = 'k
     gwGhiChu: gw.ghiChu ?? null,
     gwKg,
     gwLb,
+  };
+}
+
+// Số liệu chuyển sang công cụ xếp container: bản này xếp một loại thùng nên chỉ lấy dòng đầu,
+// kích thước đổi ra cm, trọng lượng mỗi kiện đổi ra kg.
+export function xepContainerData(value) {
+  const [dong] = value.dong;
+  const cmPerUnit = CM_PER_UNIT[value.donViKichThuoc];
+  const kgPerUnit = value.donViTrongLuong === 'lb' ? KG_PER_LB : 1;
+  const ghiChu = [];
+  if (value.dong.length > 1 || value.chuaTinh.length > 0) ghiChu.push('Công cụ này chỉ xếp một loại thùng nên chỉ nhận dòng đầu.');
+
+  let trongLuong = isFilled(dong.trongLuong) ? dong.trongLuong * kgPerUnit : null;
+  // Chỉ một dòng và chỉ có tổng GW thì chia đều cho từng kiện.
+  // Còn dòng chưa đủ số thì tổng GW gồm cả hàng của dòng đó, chia ra sẽ sai, nên để trống.
+  if (!isFilled(trongLuong) && value.dong.length === 1 && value.chuaTinh.length === 0 && value.gwCach === 'tong') {
+    trongLuong = value.gwKg / dong.soKien;
+    ghiChu.push('Trọng lượng mỗi thùng lấy tổng GW chia số kiện.');
+  }
+  return {
+    dai: dong.dai * cmPerUnit,
+    rong: dong.rong * cmPerUnit,
+    cao: dong.cao * cmPerUnit,
+    trongLuong,
+    soThung: dong.soKien,
+    ghiChuChuyen: ghiChu.join(' '),
   };
 }
 

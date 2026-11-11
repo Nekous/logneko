@@ -6,7 +6,7 @@ Trang chủ có ô tìm kiếm chung: gõ FOB, THC, mã HS hay số container l�
 
 Các công cụ tính có Lịch sử (20 lần gần nhất, lưu ngay trên máy, bấm để điền lại) và nút Xuất PDF/ảnh cho khối kết quả.
 
-> Dùng thử: https://logneko.netlify.app. Hiện có 7/8 công cụ, các công cụ còn lại đang được xây dựng.
+> Dùng thử: https://logneko.netlify.app. Đã có đủ 8/8 công cụ.
 
 ## Các công cụ
 
@@ -15,7 +15,7 @@ Các công cụ tính có Lịch sử (20 lần gần nhất, lưu ngay trên m�
 | Tính toán | CBM & quy đổi đơn vị | Dùng được |
 | Tính toán | Chargeable weight hàng air | Dùng được |
 | Tính toán | Cước LCL theo W/M | Dùng được |
-| Tính toán | Xếp hàng vào container, có mô phỏng 3D | Sắp có |
+| Tính toán | Xếp hàng vào container, có mô phỏng 3D | Dùng được |
 | Kiểm tra & tra cứu | Kiểm tra số container (ISO 6346) | Dùng được |
 | Kiểm tra & tra cứu | Tra cứu Incoterms 2020 | Dùng được |
 | Kiểm tra & tra cứu | Tra cứu mã HS code và thuế suất | Dùng được |
@@ -25,7 +25,8 @@ Các công cụ tính có Lịch sử (20 lần gần nhất, lưu ngay trên m�
 
 - Web tĩnh bằng HTML, CSS, JavaScript thuần: không có máy chủ, không cần tài khoản.
 - Mọi phép tính và tra cứu chạy ngay trong trình duyệt của người dùng.
-- Dữ liệu tra cứu lưu bằng JSON. Dự kiến dùng Three.js cho mô phỏng 3D.
+- Dữ liệu tra cứu lưu bằng JSON.
+- Mô phỏng 3D dùng [Three.js](https://threejs.org) 0.187.0 (giấy phép MIT), bản rút gọn chỉ gồm phần trang dùng, nằm trong `site/assets/js/vendor/three/` kèm giấy phép; chỉ tải khi trang xếp container có kết quả. Cách dựng lại ghi trong `scripts/three-logneko/README.md`.
 - Xuất PDF/ảnh dùng [html2canvas](https://html2canvas.hertzen.com) 1.4.1 và [jsPDF](https://github.com/parallax/jsPDF) 4.2.1 (cùng giấy phép MIT, bản sao giấy phép nằm cạnh thư viện trong `site/assets/js/vendor/`), chỉ tải khi bấm Xuất.
 - Lịch sử tính lưu bằng localStorage của trình duyệt, không gửi đi đâu.
 - Công thức được kiểm thử bằng `node --test` với các ví dụ có đáp án.
