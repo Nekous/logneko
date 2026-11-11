@@ -68,13 +68,14 @@ function renderInputs(slot, onChange) {
       };
     },
 
+    // Lịch sử có đủ số thì điền lại đủ; chuyển từ CBM hay Điền ví dụ không có thì về mặc định.
     fill(data) {
       list.fill(data);
       gw.control.value = showNumber(data.gw);
-      service.control.value = SERVICES[0].value;
-      rounding.control.value = ROUNDINGS[0].value;
-      minimum.control.value = '';
-      rate.control.value = '';
+      service.control.value = data.loaiDichVu ?? SERVICES[0].value;
+      rounding.control.value = data.lamTron === undefined ? ROUNDINGS[0].value : String(data.lamTron);
+      minimum.control.value = showNumber(data.mucToiThieu);
+      rate.control.value = showNumber(data.donGia);
     },
   };
 }

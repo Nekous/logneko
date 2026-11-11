@@ -1,7 +1,9 @@
 // Khuôn chung của trang công cụ: trang chỉ khai báo ô nhập, hàm tính và cách trình bày.
 import { formatNumber, parseNumber } from './format.js';
+import { SO_LAN_TOI_DA, docLichSu, nhanThoiGian, themLichSu, xoaHet, xoaMotLan } from './lich-su.js';
 import { isLive, loadTools, toolHref } from './tools.js';
 import { saveTransfer, takeTransfer } from './transfer.js';
+import { xuatKetQua } from './xuat.js';
 
 const PROMPT_EMPTY = 'Nhập đủ các ô để xem kết quả.';
 const PROMPT_INVALID = 'Sửa ô đang báo lỗi để xem kết quả.';
@@ -9,7 +11,11 @@ const NUMBER_HINT = 'Cách gõ số: dấu chấm (.) ngăn phần nghìn, dấu
 const ERROR_NOT_NUMBER = 'Chưa đọc được số này. Dấu chấm ngăn phần nghìn, dấu phẩy ngăn phần thập phân, ví dụ 1.234,5.';
 const ERROR_CALCULATE = 'Không tính được với số liệu này.';
 const ERROR_TRANSFER = 'Trình duyệt chặn chuyển số liệu, bạn hãy mở công cụ kia và nhập lại.';
+const ERROR_EXPORT = 'Không tạo được file. Bạn thử lại, hoặc dùng nút Copy kết quả.';
 const STATUS_RESET_MS = 2500;
+// Kết quả đứng yên chừng này thì coi như người dùng đã tính xong, lưu vào lịch sử.
+const HISTORY_DELAY_MS = 3000;
+const CONFIRM_CLEAR_MS = 4000;
 // Dòng "Đọc là" phải hiện đủ số đã gõ, không làm tròn như kết quả.
 const READING_MAX_DECIMALS = 10;
 
@@ -127,7 +133,7 @@ function readFields(items) {
   return { values, missing, invalid };
 }
 
-export function createCopyButton(getText) {
+export function createCopyButton(getText, onCopy) {
   const button = el('button', 'btn btn--primary', 'Copy kết quả');
   button.type = 'button';
   const status = el('span', 'tool-status');
@@ -135,6 +141,7 @@ export function createCopyButton(getText) {
   let timer;
 
   button.addEventListener('click', async () => {
+    onCopy?.();
     try {
       await navigator.clipboard.writeText(getText());
       status.textContent = 'Đã copy.';
@@ -160,7 +167,7 @@ async function loadToolList() {
 }
 
 // Nút chuyển số liệu sang công cụ khác; công cụ đích chưa hoạt động thì không có nút.
-function createTransferButtons(transfer, tools, source, getValue, status) {
+function createTransferButtons(transfer, tools, source, getValue, status, onTransfer) {
   const buttons = [];
   for (const { den, nhan, data } of transfer) {
     const target = tools.find((tool) => tool.id === den);
@@ -169,6 +176,7 @@ function createTransferButtons(transfer, tools, source, getValue, status) {
     const button = el('button', 'btn', nhan);
     button.type = 'button';
     button.addEventListener('click', () => {
+      onTransfer();
       if (saveTransfer(den, { tu: source?.ten, data: data(getValue()) })) {
         window.location.href = toolHref(target);
       } else {
@@ -180,8 +188,107 @@ function createTransferButtons(transfer, tools, source, getValue, status) {
   return buttons;
 }
 
+// Nút Xuất PDF/ảnh mở hàng phụ có hai lựa chọn. Thư viện chỉ tải khi bấm Tải PDF hoặc Tải ảnh.
+function createExport({ id, getTitle, body, onExport }) {
+  const toggle = el('button', 'btn', 'Xuất PDF/ảnh');
+  toggle.type = 'button';
+  toggle.setAttribute('aria-expanded', 'false');
+  const panel = el('div', 'tool-export');
+  panel.id = `${id}-xuat`;
+  panel.hidden = true;
+  toggle.setAttribute('aria-controls', panel.id);
+
+  const status = el('span', 'tool-status');
+  status.setAttribute('role', 'status');
+  const choices = [['pdf', 'Tải PDF'], ['png', 'Tải ảnh']].map(([dang, nhan]) => {
+    const button = el('button', 'btn', nhan);
+    button.type = 'button';
+    button.addEventListener('click', async () => {
+      onExport();
+      choices.forEach((item) => { item.disabled = true; });
+      status.textContent = 'Đang tạo file…';
+      try {
+        const { ten, soTrang } = await xuatKetQua({ id, tenCongCu: getTitle(), body, dang });
+        status.textContent = soTrang > 1 ? `Đã tải ${ten} (${soTrang} trang).` : `Đã tải ${ten}.`;
+      } catch (error) {
+        console.error(error);
+        status.textContent = ERROR_EXPORT;
+      } finally {
+        choices.forEach((item) => { item.disabled = false; });
+      }
+    });
+    return button;
+  });
+  panel.append(...choices, status);
+
+  toggle.addEventListener('click', () => {
+    panel.hidden = !panel.hidden;
+    toggle.setAttribute('aria-expanded', String(!panel.hidden));
+  });
+  return { toggle, panel };
+}
+
+// Khối gập "Lịch sử": mỗi dòng bấm để điền lại, nút × xóa riêng, "Xóa hết" phải bấm hai lần.
+function createHistory(id, onPick) {
+  const details = el('details', 'tool-history');
+  const summary = el('summary');
+  const intro = el('p', 'tool-history-note', `Lưu trên máy này, tối đa ${SO_LAN_TOI_DA} lần gần nhất.`);
+  const list = el('ol', 'tool-history-list');
+  const empty = el('p', 'tool-history-note', 'Chưa có lần tính nào.');
+  const clear = el('button', 'btn tool-history-clear', 'Xóa hết lịch sử');
+  clear.type = 'button';
+  details.append(summary, intro, list, empty, clear);
+
+  let confirmTimer;
+  const resetClear = () => {
+    clearTimeout(confirmTimer);
+    clear.textContent = 'Xóa hết lịch sử';
+    delete clear.dataset.confirm;
+  };
+
+  const render = (ds) => {
+    summary.textContent = `Lịch sử (${ds.length})`;
+    empty.hidden = ds.length > 0;
+    clear.hidden = ds.length === 0;
+    list.replaceChildren(...ds.map((muc) => {
+      const item = el('li', 'tool-history-item');
+      const pick = el('button', 'tool-history-pick');
+      pick.type = 'button';
+      const time = nhanThoiGian(muc.luc);
+      pick.append(el('span', 'tool-history-time', time), el('span', 'tool-history-text', muc.tomTat));
+      pick.setAttribute('aria-label', `Điền lại lần tính lúc ${time}: ${muc.tomTat}`);
+      pick.addEventListener('click', () => onPick(muc));
+      const remove = el('button', 'tool-history-remove', '×');
+      remove.type = 'button';
+      remove.setAttribute('aria-label', `Xóa lần tính lúc ${time}`);
+      remove.addEventListener('click', () => render(xoaMotLan(id, muc.luc)));
+      item.append(pick, remove);
+      return item;
+    }));
+  };
+
+  clear.addEventListener('click', () => {
+    if (clear.dataset.confirm) {
+      resetClear();
+      render(xoaHet(id));
+      return;
+    }
+    clear.dataset.confirm = 'true';
+    clear.textContent = 'Bấm lần nữa để xóa hết';
+    confirmTimer = setTimeout(resetClear, CONFIRM_CLEAR_MS);
+  });
+
+  render(docLichSu(id));
+  return {
+    details,
+    save(entry) {
+      render(themLichSu(id, entry));
+    },
+  };
+}
+
 export async function mountTool(config) {
-  const { id, fields = [], renderInputs, example, calculate, renderResult, steps, copyText, transfer = [], stickyTotal, note } = config;
+  const { id, fields = [], renderInputs, example, calculate, renderResult, steps, copyText, transfer = [], stickyTotal, historyText, note } = config;
   // Trang chỉ có một ô thì nói thẳng cần nhập gì, thay cho câu chung.
   const emptyText = config.emptyText ?? PROMPT_EMPTY;
   const tools = await loadToolList();
@@ -207,12 +314,32 @@ export async function mountTool(config) {
   const stepList = el('ol');
   how.append(el('summary', '', 'Xem cách tính'), stepList);
 
-  // Hàng nút: các giai đoạn sau thêm Xuất PDF/ảnh vào đây.
+  // Lịch sử lưu bộ số đang đưa vào calculate, kèm một dòng tóm tắt lấy từ thanh tổng.
   let current = null;
-  const copy = createCopyButton(() => copyText(current));
+  let currentValues = null;
+  let saveTimer;
+  const history = createHistory(id, (muc) => {
+    fillInputs(muc.duLieu);
+    notice.textContent = `Đã điền lại lần tính lúc ${nhanThoiGian(muc.luc)}.`;
+    notice.hidden = false;
+  });
+  const saveHistory = () => {
+    clearTimeout(saveTimer);
+    if (!current || !currentValues) return;
+    const tomTat = historyText?.(current) ?? stickyTotal?.(current) ?? copyText(current).split('\n')[0];
+    history.save({ tomTat, duLieu: currentValues });
+  };
+
+  const copy = createCopyButton(() => copyText(current), saveHistory);
+  const exporter = createExport({ id, getTitle: () => tool?.ten ?? document.title, body, onExport: saveHistory });
   const actions = el('div', 'tool-actions');
-  actions.append(copy.button, ...createTransferButtons(transfer, tools, tool, () => current, copy.status), copy.status);
-  output.append(how, actions);
+  actions.append(
+    copy.button,
+    ...createTransferButtons(transfer, tools, tool, () => current, copy.status, saveHistory),
+    exporter.toggle,
+    copy.status,
+  );
+  output.append(how, actions, exporter.panel);
 
   const result = el('section', 'tool-panel tool-result');
   result.setAttribute('aria-label', 'Kết quả');
@@ -227,6 +354,8 @@ export async function mountTool(config) {
 
   const showMessage = (text, isError = false) => {
     current = null;
+    currentValues = null;
+    clearTimeout(saveTimer);
     message.textContent = text;
     message.hidden = false;
     message.classList.toggle('is-error', isError);
@@ -237,6 +366,10 @@ export async function mountTool(config) {
 
   const showResult = (values, value) => {
     current = value;
+    // Chép riêng để lần gõ sau không đổi luôn bộ số chờ lưu.
+    currentValues = JSON.parse(JSON.stringify(values));
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveHistory, HISTORY_DELAY_MS);
     message.hidden = true;
     body.replaceChildren();
     renderResult(value, body);
@@ -290,7 +423,11 @@ export async function mountTool(config) {
     // Ô dữ liệu không nhắc tới thì trả về mặc định, để số cũ không làm sai kết quả.
     for (const { field, control } of items) {
       const fallback = field.type === 'select' ? field.options[0].value : '';
-      control.value = data[field.name] ?? fallback;
+      const value = data[field.name] ?? fallback;
+      // Số lưu trong lịch sử phải viết lại kiểu Việt Nam, để 52,5 không thành "52.5" rồi bị đọc là 52.500.
+      control.value = isNumberField(field) && typeof value === 'number'
+        ? formatNumber(value, { toiDa: READING_MAX_DECIMALS })
+        : value;
     }
     custom?.fill(data);
     update();
@@ -308,6 +445,7 @@ export async function mountTool(config) {
     inputs.append(row);
   }
 
+  inputs.append(history.details);
   if (stickyTotal) inputs.append(sticky);
   inputs.addEventListener('input', update);
 

@@ -23,8 +23,8 @@ Trang đặt tại site/tools/<tên>.html.
    - Ô nhập, có nút "Điền ví dụ".
    - Kết quả hiện ngay khi gõ, không cần nút Tính.
    - Nút "Xem cách tính": công thức và các bước với chính số vừa nhập.
-   - Hàng nút: Copy kết quả, Xuất PDF/ảnh, Chuyển sang công cụ liên quan.
-   - Lịch sử 20 lần tính gần nhất.
+   - Hàng nút Copy, Xuất PDF/ảnh và Lịch sử có sẵn trong `mountTool`. Trang chỉ cần khai báo `stickyTotal` (hoặc `historyText`) để có dòng tóm tắt trong lịch sử, và `fill` của `renderInputs` phải điền lại được mọi ô từ bộ số đưa vào `calculate`.
+   - Chuyển sang công cụ liên quan: khai báo `transfer`.
    - Ghi chú nguồn và cảnh báo "chỉ để tham khảo" khi cần.
    Phần nào khuôn chung chưa có thì để trống và ghi rõ trong báo cáo, không làm tạm riêng cho một trang.
 8. Cập nhật trạng thái công cụ trong site/data/tools.json.

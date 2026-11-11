@@ -133,5 +133,9 @@ await mountTool({
   steps: (values, value) => containerSteps(value),
   copyText: containerCopyText,
   stickyTotal: (value) => (value.tong === 1 ? `${value.ketQua[0].so}: ${headlineText(value)}` : headlineText(value)),
+  // Dòng lịch sử nêu số đầu tiên, để biết lần kiểm tra đó là danh sách nào.
+  historyText: (value) => (value.tong === 1
+    ? `${value.ketQua[0].so}: ${headlineText(value)}`
+    : `${value.ketQua[0].so} và ${value.tong - 1} số khác: ${headlineText(value)}`),
   note: `Công thức theo ISO 6346: số container gồm 3 chữ mã chủ sở hữu, 1 chữ loại thiết bị (U, J hoặc Z), 6 số sê-ri và 1 chữ số kiểm tra tính từ 10 ký tự đầu. Số hợp lệ chỉ có nghĩa là viết đúng mẫu, không cho biết cont có thật hay đang ở đâu. ${OWNER_DATA ? sourceText(OWNER_DATA) : 'Không tải được danh sách mã hãng.'} Nút Điền ví dụ dùng số ví dụ của ISO 6346, chính số đó gõ sai chữ số cuối, và một số tự đặt. Kết quả chỉ để tham khảo.`,
 });

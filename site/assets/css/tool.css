@@ -1078,3 +1078,149 @@ html { scroll-padding-bottom: 64px; }
 
   .td-body { max-width: 72ch; }
 }
+
+/* Xuất PDF/ảnh: hàng phụ mở ra từ nút Xuất */
+.tool-export {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.tool-export[hidden] { display: none; }
+
+/* Tờ xuất nằm ngoài màn hình, chỉ để html2canvas chụp; luôn nền trắng chữ tối */
+.export-sheet {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  padding: 32px 36px;
+  background: #FFFFFF;
+  color: var(--text);
+}
+
+/* html2canvas đo sai chữ khi bật số đều cột hay giãn chữ, chèn khoảng trắng lạ ("18 :08"); tờ xuất tắt đi. */
+.export-sheet,
+.export-sheet * {
+  font-variant-numeric: normal;
+  letter-spacing: normal;
+}
+
+.export-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-muted);
+  font-size: var(--size-small);
+}
+
+.export-logo {
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+}
+
+.export-title {
+  margin: 20px 0 16px;
+  font-size: 1.75rem;
+}
+
+.export-foot {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+/* Lịch sử: khối gập cuối khung nhập */
+.tool-history {
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.tool-history summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--size-small);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.tool-history summary::before {
+  content: "+";
+  width: 1.25em;
+  color: var(--text-muted);
+}
+
+.tool-history[open] summary::before { content: "−"; }
+
+.tool-history-note {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.tool-history-list {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tool-history-item {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--line);
+}
+
+.tool-history-pick {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
+  min-height: 52px;
+  padding: 8px 4px;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tool-history-pick:hover .tool-history-text { text-decoration: underline; }
+
+.tool-history-time {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.tool-history-text {
+  overflow-wrap: anywhere;
+  font-size: var(--size-small);
+}
+
+.tool-history-remove {
+  flex: none;
+  width: 44px;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.tool-history-remove:hover { color: var(--danger); }
+
+.tool-history-clear { margin: 12px 0 8px; }
+
+.tool-history-clear[data-confirm] { border-color: var(--danger); color: var(--danger); }
+
+.tool-history-clear[hidden] { display: none; }
