@@ -6,7 +6,7 @@ Trang chủ có ô tìm kiếm chung: gõ FOB, THC, mã HS hay số container l�
 
 Các công cụ tính có Lịch sử (20 lần gần nhất, lưu ngay trên máy, bấm để điền lại) và nút Xuất PDF/ảnh cho khối kết quả.
 
-> Dùng thử: https://logneko.netlify.app. Hiện có 6/8 công cụ, các công cụ còn lại đang được xây dựng.
+> Dùng thử: https://logneko.netlify.app. Hiện có 7/8 công cụ, các công cụ còn lại đang được xây dựng.
 
 ## Các công cụ
 
@@ -18,7 +18,7 @@ Các công cụ tính có Lịch sử (20 lần gần nhất, lưu ngay trên m�
 | Tính toán | Xếp hàng vào container, có mô phỏng 3D | Sắp có |
 | Kiểm tra & tra cứu | Kiểm tra số container (ISO 6346) | Dùng được |
 | Kiểm tra & tra cứu | Tra cứu Incoterms 2020 | Dùng được |
-| Kiểm tra & tra cứu | Tra cứu mã HS code và thuế suất | Sắp có |
+| Kiểm tra & tra cứu | Tra cứu mã HS code và thuế suất | Dùng được |
 | Từ điển | Thuật ngữ & viết tắt logistics | Dùng được |
 
 ## Công nghệ
@@ -42,7 +42,7 @@ node --test tests/                            # chạy test
 ## Nguồn dữ liệu
 
 - Danh sách mã chủ sở hữu container: [Terminal49 SCAC code lookup](https://terminal49.com/tools/scac-code-lookup); SITC và KMTC theo [ShipsGo](https://shipsgo.com/ocean/container-prefixes/kmtu/container-tracking).
-- Mã HS và thuế suất: biểu thuế xuất nhập khẩu bản cập nhật 06/01/2026.
+- Mã HS và thuế suất: biểu thuế xuất nhập khẩu bản cập nhật 05/04/2026, chuyển sang JSON bằng `scripts/excel_to_json.py` (cần Python và openpyxl).
 - Nội dung Incoterms và từ điển được viết lại bằng lời của LOGNEKO từ tài liệu học.
 
 ## Lưu ý

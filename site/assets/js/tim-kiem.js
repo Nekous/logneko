@@ -1,5 +1,5 @@
 // Ô tìm kiếm chung ở đầu trang chủ. Cách tìm nằm trong calc/tim-kiem.js, ở đây chỉ vẽ.
-import { demDong, timChung } from './calc/tim-kiem.js';
+import { demDong, maHsCua, timChung } from './calc/tim-kiem.js';
 import { saveTransfer } from './core/transfer.js';
 
 const SEARCH_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m15.5 15.5 5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
@@ -129,11 +129,30 @@ export function mountSearch(slot, congCu) {
     });
   };
 
+  // Gõ mã HS thì tải riêng chương đó (vài chục KB) để hiện luôn mô tả; không tải cả biểu thuế.
+  nguon.hsChuong = {};
+  const dangTaiChuong = new Set();
+  const loadHs = () => {
+    const ma = maHsCua(input.value);
+    const so = ma && Number(ma.slice(0, 2));
+    if (!so || so in nguon.hsChuong || dangTaiChuong.has(so)) return;
+    dangTaiChuong.add(so);
+    fetchJson(`/data/hs/chuong-${String(so).padStart(2, '0')}.json`)
+      .then((data) => { nguon.hsChuong[so] = data; })
+      // Chương không có hay tải hỏng thì dòng Mã HS vẫn có link sang công cụ, chỉ thiếu mô tả.
+      .catch((error) => console.error(error))
+      .finally(() => {
+        dangTaiChuong.delete(so);
+        render();
+      });
+  };
+
   const links = () => [...panel.querySelectorAll('a')];
 
   input.addEventListener('focus', load);
   input.addEventListener('input', () => {
     load();
+    loadHs();
     render();
   });
   input.addEventListener('keydown', (event) => {

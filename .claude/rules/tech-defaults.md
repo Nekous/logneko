@@ -3,7 +3,7 @@
 - HTML, CSS, JavaScript thuần. Không dùng framework, không máy chủ.
 - Three.js cho mô phỏng 3D; html2canvas + jsPDF cho xuất PDF/ảnh.
 - Dữ liệu tra cứu nằm trong site/data/*.json (incoterms, tu-dien, container, owner-codes, hs/), không viết cứng trong code.
-- HS code: scripts/ chuyển file BIEU THUE XNK 2026.01.06.xlsx (sheet BT2026) sang JSON chia theo chương.
+- HS code: scripts/excel_to_json.py chuyển file nguon/BIEU THUE XNK 2026.04.05.xlsx (sheet BT2026) sang JSON chia theo chương trong site/data/hs/.
 - Lịch sử và chế độ tối lưu bằng localStorage.
 - Deploy lên Netlify, tên miền miễn phí .netlify.app; chỉ đưa thư mục site/ lên mạng.
 - Công thức nằm trong site/assets/js/calc/, là hàm thuần không đụng giao diện, để test chạy trực tiếp bằng node --test.

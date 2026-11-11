@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { SO_DONG_TU_DIEN, demDong, timChung } from '../site/assets/js/calc/tim-kiem.js';
+import { SO_DONG_TU_DIEN, demDong, maHsCua, timChung } from '../site/assets/js/calc/tim-kiem.js';
 import { timMuc } from '../site/assets/js/calc/tu-dien.js';
 
 const readJson = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
@@ -42,23 +42,34 @@ test('THC: mục từ điển kèm link sang công cụ cước LCL, không ra T
   assert.ok(!tieuDe(ketQua, 'tu-dien').includes('THL'));
 });
 
-test('Mã HS: nhận 2 đến 8 chữ số, công cụ chưa có thì hiện Sắp có, không link', () => {
+test('Mã HS: nhận 2 đến 8 chữ số, link sang công cụ kèm mã', () => {
   for (const [chu, ma] of [['8471', '8471'], ['8471.30', '847130'], ['8471 30', '847130']]) {
     const ketQua = tim(chu);
     assert.equal(ketQua[0].id, 'hs', chu);
     assert.equal(ketQua[0].dong[0].tieuDe, `Mã HS ${ma}`);
-    assert.equal(ketQua[0].dong[0].href, null);
-    assert.equal(ketQua[0].dong[0].nhan, 'Sắp có');
+    assert.equal(ketQua[0].dong[0].href, `/tools/hs-code.html?ma=${ma}`);
+    assert.equal(ketQua[0].dong[0].nhan, null);
   }
   assert.equal(nhom(tim('8'), 'hs'), undefined);
   assert.equal(nhom(tim('123456789'), 'hs'), undefined);
+  assert.equal(maHsCua('0306.15'), '030615');
+  assert.equal(maHsCua('tôm'), null);
 });
 
-test('Mã HS: khi công cụ đã chạy thì có link', () => {
-  const congCu = NGUON.congCu.map((tool) => (tool.id === 'hs-code' ? { ...tool, trang_thai: 'hoat-dong' } : tool));
+test('Mã HS: công cụ chưa chạy thì hiện Sắp có, không link', () => {
+  const congCu = NGUON.congCu.map((tool) => (tool.id === 'hs-code' ? { ...tool, trang_thai: 'sap-co' } : tool));
   const dong = tim('8471', { ...NGUON, congCu })[0].dong[0];
-  assert.equal(dong.href, '/tools/hs-code.html');
-  assert.equal(dong.nhan, null);
+  assert.equal(dong.href, null);
+  assert.equal(dong.nhan, 'Sắp có');
+});
+
+test('Mã HS: đã tải chương thì hiện mô tả của mã', () => {
+  const c84 = JSON.parse(readFileSync(new URL('../site/data/hs/chuong-84.json', import.meta.url), 'utf8'));
+  const moTa = (chu) => tim(chu, { ...NGUON, hsChuong: { 84: c84 } })[0].dong[0].moTa;
+  assert.match(moTa('84713020'), /^84713020: Máy tính xách tay/);
+  // Gõ mã ngắn thì lấy dòng đầu tiên bắt đầu bằng mã đó, tức dòng nhóm.
+  assert.match(moTa('8471'), /^8471: /);
+  assert.equal(moTa('84799999'), 'Không có mã này trong biểu thuế.');
 });
 
 test('Số container: nhận số viết thường, có dấu cách, gạch nối; chuyển đủ số sang công cụ', () => {

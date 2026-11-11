@@ -16,7 +16,7 @@ export function chuanHoa(text) {
   return boDau(text.normalize('NFKC')).replace(/[^a-z0-9]/g, '');
 }
 
-function tachChu(text) {
+export function tachChu(text) {
   return boDau(text.normalize('NFKC')).split(/[^a-z0-9]+/).filter(Boolean);
 }
 

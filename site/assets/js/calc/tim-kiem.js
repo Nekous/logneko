@@ -44,16 +44,29 @@ function nhomSoCont(congCu, chu) {
   };
 }
 
-function nhomHs(congCu, chu) {
-  if (!MAU_HS.test(chu)) return null;
-  const ma = chu.replace(/[.\s]/g, '');
-  if (ma.length < HS_NGAN_NHAT || ma.length > HS_DAI_NHAT) return null;
+// Chữ gõ trông như mã HS (2–8 số, có thể cách bằng dấu chấm, dấu cách) thì trả về chuỗi số.
+export function maHsCua(chu) {
+  const text = String(chu ?? '').trim();
+  if (!MAU_HS.test(text)) return null;
+  const ma = text.replace(/[.\s]/g, '');
+  return ma.length >= HS_NGAN_NHAT && ma.length <= HS_DAI_NHAT ? ma : null;
+}
+
+// hsChuong: dữ liệu chương đã tải, theo số chương. Có thì hiện luôn mô tả của mã (đúng mã, hoặc dòng đầu
+// tiên bắt đầu bằng mã đó); chưa tải thì chỉ có link sang công cụ.
+function nhomHs(congCu, chu, hsChuong) {
+  const ma = maHsCua(chu);
+  if (!ma) return null;
   const tool = timCongCu(congCu, 'hs-code');
   if (!tool) return null;
+  const chuong = hsChuong?.[Number(ma.slice(0, 2))];
+  const dong = chuong?.dong.find((item) => item.ma === ma) ?? chuong?.dong.find((item) => item.ma?.startsWith(ma));
+  let moTa = tool.mo_ta;
+  if (chuong) moTa = dong ? `${dong.ma}: ${dong.vi.replace(/^[-–\s]+/, '')}` : 'Không có mã này trong biểu thuế.';
   return {
     id: 'hs',
     ten: 'Mã HS',
-    dong: [{ tieuDe: `Mã HS ${ma}`, phu: tool.ten, moTa: tool.mo_ta, ...denCongCu(tool), linkPhu: [] }],
+    dong: [{ tieuDe: `Mã HS ${ma}`, phu: tool.ten, moTa, ...denCongCu(tool, `/tools/hs-code.html?ma=${ma}`), linkPhu: [] }],
   };
 }
 
@@ -137,17 +150,17 @@ function nhomTuDien(tuDien, congCu, chu, daGop) {
   };
 }
 
-// nguon: { congCu, incoterms, tuDien }; nguồn nào chưa tải được thì để null, các nhóm khác vẫn tìm.
+// nguon: { congCu, incoterms, tuDien, hsChuong }; nguồn nào chưa tải được thì để null, các nhóm khác vẫn tìm.
 // Số container và mã HS luôn đứng đầu vì nhận theo mẫu; ba nhóm còn lại xếp theo độ khớp
 // của dòng đầu (gõ "phi" thì từ điển có "Phí..." lên trước), bằng nhau thì giữ thứ tự
 // Incoterms, Công cụ, Từ điển. Ô trống thì trả danh sách rỗng.
-export function timChung({ congCu, incoterms = null, tuDien = null }, chuGo) {
+export function timChung({ congCu, incoterms = null, tuDien = null, hsChuong = null }, chuGo) {
   const chu = String(chuGo ?? '').trim();
   if (!chu) return [];
   const tools = congCu ?? [];
   // Incoterms tìm trước, để mục từ điển đã gộp vào dòng Incoterms không hiện lại ở nhóm Từ điển.
   const daGop = new Set();
-  const theoMau = [nhomSoCont(tools, chu), nhomHs(tools, chu)];
+  const theoMau = [nhomSoCont(tools, chu), nhomHs(tools, chu, hsChuong)];
   const theoChu = [
     incoterms ? nhomIncoterms(incoterms, tuDien, tools, chu, daGop) : null,
     nhomCongCu(tools, chu),

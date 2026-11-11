@@ -59,7 +59,7 @@
       "id": "hs-code",
       "ten": "Tra cứu mã HS và thuế suất",
       "nhom": "Kiểm tra & tra cứu",
-      "trang_thai": "sap-co",
+      "trang_thai": "hoat-dong",
       "mo_ta": "Tra mã hàng và thuế suất theo biểu thuế xuất nhập khẩu.",
       "nhap": "Mã 2 đến 8 chữ số hoặc tên hàng, gõ không dấu vẫn tìm được.",
       "ket_qua": "Cây phân cấp, mô tả song ngữ, đơn vị tính, thuế NK ưu đãi, NK thông thường, VAT."
@@ -78,6 +78,6 @@
     { "so": "3", "nhan": "nhóm: tính toán, tra cứu, từ điển" },
     { "so": "0 đồng", "nhan": "miễn phí, không cần tài khoản" },
     { "so": "11", "nhan": "điều kiện Incoterms 2020", "can": "incoterms" },
-    { "so": "Gần 12.000", "nhan": "mã HS", "can": "hs-code" }
+    { "so": "11.871", "nhan": "mã HS 8 số, gồm cả Chương 98", "can": "hs-code" }
   ]
 }
