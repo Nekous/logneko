@@ -102,12 +102,14 @@ export function mountSearch(slot, congCu) {
     }
     const ketQua = timChung(nguon, chu);
     const soDong = demDong(ketQua);
-    count.textContent = soDong
-      ? `Có ${soDong} kết quả khớp nhất cho "${chu}".`
-      : `Không thấy kết quả cho "${chu}". Thử gõ viết tắt, tên tiếng Anh, hoặc xem danh sách công cụ bên dưới.`;
+    const loading = 'Đang tải dữ liệu Incoterms và từ điển…';
+    // Chưa tải xong thì chưa kết luận "không thấy": có thể kết quả nằm trong phần đang tải.
+    if (soDong) count.textContent = `Có ${soDong} kết quả khớp nhất cho "${chu}".`;
+    else if (dangTai) count.textContent = loading;
+    else count.textContent = `Không thấy kết quả cho "${chu}". Thử gõ viết tắt, tên tiếng Anh, hoặc xem danh sách công cụ bên dưới.`;
     count.classList.toggle('is-sr', soDong > 0);
     groups.replaceChildren(...ketQua.map(renderGroup));
-    if (dangTai) note.textContent = 'Đang tải dữ liệu Incoterms và từ điển…';
+    if (dangTai) note.textContent = soDong ? loading : '';
     else note.textContent = loi.length ? `Không tải được dữ liệu ${loi.join(' và ')}, nên kết quả có thể thiếu. Bạn thử tải lại trang.` : '';
     note.hidden = !note.textContent;
   };
