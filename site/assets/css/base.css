@@ -36,6 +36,16 @@ h1, h2 {
 
 .two-tone-soft { color: var(--text-soft); }
 
+/* Chỉ dành cho trình đọc màn hình: ẩn khỏi mắt nhưng vẫn được đọc */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* Nút viên thuốc */
 .btn {
   display: inline-flex;

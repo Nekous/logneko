@@ -68,6 +68,20 @@ test('Ảnh nền và logo mà CSS, thanh trên nhắc tới đều có file', (
   for (const path of anh) assert.ok(existsSync(site(path)), `thiếu ${path}`);
 });
 
+test('Trình đọc màn hình chỉ đọc một câu tổng, không đọc lại cả khung kết quả', () => {
+  const shell = doc('/assets/js/core/tool-shell.js');
+  assert.ok(!shell.includes("'aria-live'"), 'khung kết quả không được tự đọc mỗi phím gõ');
+  assert.match(shell, /el\('p', 'sr-only'\);\s*announcer\.setAttribute\('role', 'status'\)/);
+  assert.match(shell, /const ANNOUNCE_DELAY_MS = 1000;/);
+  assert.match(shell, /inputs\.addEventListener\('input', onUserChange\)/);
+  assert.match(doc('/assets/css/base.css'), /\.sr-only \{[^}]*clip-path: inset\(50%\)/);
+});
+
+test('Mô tả cước LCL ghi "thể tích", không ghi "khối lượng"', () => {
+  const lcl = JSON.parse(doc('/data/tools.json')).cong_cu.find((tool) => tool.id === 'cuoc-lcl');
+  assert.equal(lcl.mo_ta, 'Tính cước hàng lẻ đường biển theo thể tích hoặc trọng lượng.');
+});
+
 test('Ảnh nền có đủ bản sáng và tối cho cả hai chế độ', () => {
   const tokens = doc('/assets/css/tokens.css');
   for (const ten of ['cang-sang-960', 'cang-sang-1600', 'cang-sang-2400', 'cang-toi-960', 'cang-toi-1600', 'cang-toi-2400']) {

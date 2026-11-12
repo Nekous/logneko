@@ -15,6 +15,8 @@ const ERROR_EXPORT = 'Không tạo được file. Bạn thử lại, hoặc dùn
 const STATUS_RESET_MS = 2500;
 // Kết quả đứng yên chừng này thì coi như người dùng đã tính xong, lưu vào lịch sử.
 const HISTORY_DELAY_MS = 3000;
+// Trình đọc màn hình chỉ đọc câu tổng khi người dùng ngừng gõ chừng này, không đọc theo từng phím.
+const ANNOUNCE_DELAY_MS = 1000;
 const CONFIRM_CLEAR_MS = 4000;
 // Dòng "Đọc là" phải hiện đủ số đã gõ, không làm tròn như kết quả.
 const READING_MAX_DECIMALS = 10;
@@ -341,13 +343,16 @@ export async function mountTool(config) {
   );
   output.append(how, actions, exporter.panel);
 
+  // Khung kết quả không tự đọc: đọc cả bảng và cách tính sau mỗi phím gõ thì quá dài.
+  // Trình đọc màn hình chỉ đọc một câu tổng ở dòng ẩn announcer.
+  const announcer = el('p', 'sr-only');
+  announcer.setAttribute('role', 'status');
   const result = el('section', 'tool-panel tool-result');
   result.setAttribute('aria-label', 'Kết quả');
-  result.setAttribute('aria-live', 'polite');
-  result.append(message, body, output);
+  result.append(announcer, message, body, output);
 
   // Danh sách dài đẩy khung kết quả xuống xa, nên trên điện thoại giữ tổng trong tầm mắt.
-  // Khung kết quả đã đọc cho trình đọc màn hình, thanh này không đọc lặp lại.
+  // Câu tổng đã đọc qua announcer, thanh này không đọc lặp lại.
   const sticky = el('p', 'tool-sticky-total');
   sticky.hidden = true;
   sticky.setAttribute('aria-hidden', 'true');
@@ -406,12 +411,29 @@ export async function mountTool(config) {
     return showResult(values, value);
   };
 
+  // Lúc mới mở trang không đọc gì; chỉ đọc sau khi người dùng gõ, bấm, điền ví dụ hay nhận số.
+  let announceOn = false;
+  let announceTimer;
+  const announce = () => {
+    if (!announceOn) return;
+    clearTimeout(announceTimer);
+    announceTimer = setTimeout(() => {
+      const text = current ? (stickyTotal?.(current) ?? copyText(current).split('\n')[0]) : message.textContent;
+      if (text && text !== announcer.textContent) announcer.textContent = text;
+    }, ANNOUNCE_DELAY_MS);
+  };
+  const onUserChange = () => {
+    announceOn = true;
+    update();
+    announce();
+  };
+
   // Ô nhập đặc biệt, như danh sách kiện của CBM, tự vẽ và trả về { read, fill }.
   // read() trả về { values, invalid }; ô thiếu do calculate tự xét bằng cách trả về null.
   if (renderInputs) {
     const slot = el('div', 'tool-custom');
     inputs.append(slot);
-    custom = renderInputs(slot, update);
+    custom = renderInputs(slot, onUserChange);
   }
 
   const notice = el('p', 'tool-received');
@@ -430,7 +452,7 @@ export async function mountTool(config) {
         : value;
     }
     custom?.fill(data);
-    update();
+    onUserChange();
   };
 
   if (example) {
@@ -447,7 +469,7 @@ export async function mountTool(config) {
 
   inputs.append(history.details);
   if (stickyTotal) inputs.append(sticky);
-  inputs.addEventListener('input', update);
+  inputs.addEventListener('input', onUserChange);
 
   const layout = el('div', 'tool-layout');
   layout.append(inputs, result);
