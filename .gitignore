@@ -9,6 +9,11 @@ design/mau-trang.png
 design/mo-ta/
 design/screenshots/
 
+# Ảnh gốc của logo và ảnh nền (16 MB); bản cho web do scripts/toi-uu-anh.py tạo trong site/assets/img/
+Ảnh Logo LOGNEKO.png
+Ảnh nền sáng.png
+Ảnh nền tối.png
+
 # File sinh ra khi chạy công cụ
 .netlify/
 node_modules/

@@ -76,13 +76,25 @@ h1, h2 {
   white-space: nowrap;
 }
 
-/* Logo chữ, thay bằng logo thật sau */
+/* Logo: hình mèo trong thùng cạnh chữ LOGNEKO */
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   text-decoration: none;
+}
+
+/* Chế độ tối: ô kem phía sau để mèo navy không chìm vào nền tối */
+.logo-mark {
+  flex: none;
+  box-sizing: content-box;
+  padding: 3px 4px;
+  border-radius: 10px;
+  background: var(--logo-tile);
 }
 
 /* Thanh trên */
@@ -132,7 +144,7 @@ h1, h2 {
 
 .site-nav.is-open { display: flex; }
 
-/* Trang có ảnh đầu trang: thanh trên đè lên ảnh, chữ trắng */
+/* Trang có ảnh đầu trang: thanh trên đè lên ảnh, màu chữ theo ảnh sáng hoặc tối */
 .has-hero #site-header {
   position: absolute;
   top: 0;
@@ -142,7 +154,7 @@ h1, h2 {
   color: var(--on-hero);
 }
 
-.has-hero .icon-btn { border-color: rgb(255 255 255 / 40%); }
+.has-hero .icon-btn { border-color: var(--hero-btn-line); }
 
 @media (min-width: 860px) {
   .menu-btn { display: none; }
@@ -161,8 +173,8 @@ h1, h2 {
   }
 
   .has-hero .site-nav .btn:not(.btn--primary) {
-    border-color: rgb(255 255 255 / 40%);
-    background: rgb(255 255 255 / 12%);
+    border-color: var(--hero-btn-line);
+    background: var(--hero-btn-bg);
     color: var(--on-hero);
   }
 }
@@ -175,12 +187,21 @@ h1, h2 {
 }
 
 .footer-logo {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
   font-family: var(--font-heading);
   font-size: clamp(2.5rem, 2rem + 4vw, 4.5rem);
   font-weight: var(--weight-heading);
   line-height: 1.1;
   text-decoration: none;
+}
+
+.footer-logo .logo-mark {
+  width: clamp(58px, 2.5rem + 4vw, 86px);
+  height: auto;
+  padding: 5px 6px;
+  border-radius: 14px;
 }
 
 .footer-cols {

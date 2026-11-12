@@ -1,43 +1,45 @@
 /* Riêng trang chủ. */
 
-/* Khối đầu trang */
+/* Khối đầu trang. Điện thoại: chữ ở trên, dải ảnh bến cảng ở dưới.
+   Màn hình từ 1100 px: ảnh nằm bên phải, chữ ở khoảng trời trống bên trái ảnh. */
 .hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: var(--hero-placeholder);
+  background: var(--hero-sky);
   color: var(--on-hero);
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--hero-overlay);
-}
-
-.hero-scene {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  display: block;
-  width: 100%;
-  height: 120px;
-  fill: var(--hero-scene);
-}
-
 .hero-inner {
-  display: grid;
-  gap: 36px;
-  padding-block: 104px 104px;
+  padding-block: 96px 8px;
 }
 
 .hero-copy > p {
   max-width: 34rem;
   margin-block: 16px 24px;
+}
+
+/* Ảnh chỉ để trang trí. Biến ảnh khai báo theo chế độ trong tokens.css, nên trình duyệt chỉ tải một ảnh. */
+.hero-art {
+  height: clamp(240px, 70vw, 480px);
+  margin-top: -12px;
+  background-image: var(--hero-art-sm);
+  background-position: 88% 70%;
+  background-repeat: no-repeat;
+  /* Phóng to để dải ảnh chỉ lấy phần bến cảng, bỏ bớt mặt biển trống bên trái */
+  background-size: 150% auto;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%);
+  mask-image: linear-gradient(180deg, transparent, #000 22%);
+}
+
+/* Máy tính bảng: dải đủ rộng để hiện cả ảnh, lấy bản ảnh lớn cho khỏi mờ */
+@media (min-width: 600px) {
+  .hero-art {
+    height: 52vw;
+    background-image: var(--hero-art-lg);
+    background-position: 100% 60%;
+    background-size: cover;
+  }
 }
 
 /* Ô tìm kiếm chung */
@@ -206,66 +208,40 @@ a.search-main:hover { background: var(--bg); }
 
 .search-all { margin: 4px 10px 8px; }
 
-/* Thẻ minh họa công cụ CBM, chưa tính được */
-.demo-card {
-  width: 100%;
-  max-width: 420px;
-  padding: 20px;
-  border-radius: var(--radius-card);
-  background: var(--card);
-  color: var(--text);
-  box-shadow: 0 18px 40px rgb(0 0 0 / 28%);
-}
-
-.demo-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-  font-weight: 500;
-}
-
-.demo-rows li {
-  padding-block: 8px;
-  border-bottom: 1px solid var(--line);
-  color: var(--text-muted);
-  font-size: var(--size-small);
-}
-
-.demo-total {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-top: 14px;
-  color: var(--text-muted);
-  font-size: var(--size-small);
-}
-
-.demo-total strong {
-  color: var(--text);
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 400;
-}
-
-@media (min-width: 960px) {
+@media (min-width: 1100px) {
   .hero-inner {
-    grid-template-columns: 1.15fr 0.85fr;
+    display: flex;
     align-items: center;
-    min-height: 680px;
-    padding-block: 120px 200px;
+    min-height: clamp(640px, 52vw, 820px);
+    padding-block: 104px 72px;
   }
 
-  .demo-card { justify-self: end; }
+  .hero-copy { max-width: 30rem; }
 
-  /* Đang có kết quả tìm thì thẻ minh họa đứng yên ở trên, không trôi theo độ dài danh sách. */
-  .hero-inner:has(.search-panel:not([hidden])) .demo-card {
-    align-self: start;
-    margin-top: 24px;
+  .hero-art {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+    height: auto;
+    margin: 0;
+    aspect-ratio: 2570 / 1536;
+    background-image: var(--hero-art-lg);
+    background-position: right center;
+    background-size: cover;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%);
+    mask-image: linear-gradient(90deg, transparent, #000 12%);
   }
 
-  .hero-scene { height: 200px; }
+  /* Lớp mờ dưới chữ để đọc rõ khi chữ chạm tới bến cảng */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, var(--hero-fade) 0%, var(--hero-fade) 28%, transparent 58%);
+  }
 }
 
 /* Khối 8 công cụ */

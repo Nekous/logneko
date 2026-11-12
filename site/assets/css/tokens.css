@@ -20,14 +20,21 @@
   --on-accent: #1E2410;
   --dark-block: linear-gradient(135deg, #1F2A0E, #5C6F16);
   --on-dark-block: #F3F0E4;
-  --on-hero: #FFFFFF;
   /* Thanh hành trình Incoterms: người mua dùng xanh chanh, người bán dùng xanh rêu */
   --buyer: var(--accent);
   --on-buyer: var(--on-accent);
-  /* Khung giữ chỗ cho ảnh cảng chiều tối, thay bằng ảnh thật sau */
-  --hero-placeholder: linear-gradient(180deg, #171D26 0%, #2C2F3A 42%, #7A4F45 72%, #C98A5A 90%);
-  --hero-overlay: rgb(10 12 8 / 38%);
-  --hero-scene: #12160C;
+
+  /* Đầu trang chủ: ảnh cảng ban ngày, chữ đậm. Màu nền lấy đúng màu trời ở mép trái ảnh
+     để chỗ ảnh chưa phủ tới liền với ảnh. Ảnh tạo bằng scripts/toi-uu-anh.py. */
+  --on-hero: #1E2410;
+  --hero-sky: linear-gradient(180deg, #FEEAE3 0%, #F3E9E7 40%, #E3E6EB 60%, #D2E3EB 80%, #C6E1EA 100%);
+  --hero-fade: rgb(250 247 238 / 82%);
+  --hero-btn-bg: rgb(255 255 255 / 55%);
+  --hero-btn-line: rgb(30 36 16 / 18%);
+  --hero-art-sm: image-set(url("/assets/img/cang-sang-960.webp") 1x, url("/assets/img/cang-sang-1600.webp") 2x);
+  --hero-art-lg: image-set(url("/assets/img/cang-sang-1600.webp") 1x, url("/assets/img/cang-sang-2400.webp") 2x);
+  /* Ô sau hình mèo: trong suốt ở chế độ sáng, màu kem ở chế độ tối để mèo navy không chìm */
+  --logo-tile: transparent;
 
   /* Font */
   --font-heading: "Newsreader", Georgia, "Times New Roman", serif;
@@ -64,6 +71,14 @@
     --shadow-card: none;
     --shadow-pop: 0 12px 32px rgb(0 0 0 / 55%);
     --line-pop: #4A5538;
+    --on-hero: #FFFFFF;
+    --hero-sky: linear-gradient(180deg, #0D1427 0%, #0F172A 50%, #0B162A 100%);
+    --hero-fade: rgb(13 20 39 / 80%);
+    --hero-btn-bg: rgb(255 255 255 / 12%);
+    --hero-btn-line: rgb(255 255 255 / 40%);
+    --hero-art-sm: image-set(url("/assets/img/cang-toi-960.webp") 1x, url("/assets/img/cang-toi-1600.webp") 2x);
+    --hero-art-lg: image-set(url("/assets/img/cang-toi-1600.webp") 1x, url("/assets/img/cang-toi-2400.webp") 2x);
+    --logo-tile: #FAF7EE;
   }
 }
 
@@ -82,4 +97,12 @@
   --shadow-card: none;
   --shadow-pop: 0 12px 32px rgb(0 0 0 / 55%);
   --line-pop: #4A5538;
+  --on-hero: #FFFFFF;
+  --hero-sky: linear-gradient(180deg, #0D1427 0%, #0F172A 50%, #0B162A 100%);
+  --hero-fade: rgb(13 20 39 / 80%);
+  --hero-btn-bg: rgb(255 255 255 / 12%);
+  --hero-btn-line: rgb(255 255 255 / 40%);
+  --hero-art-sm: image-set(url("/assets/img/cang-toi-960.webp") 1x, url("/assets/img/cang-toi-1600.webp") 2x);
+  --hero-art-lg: image-set(url("/assets/img/cang-toi-1600.webp") 1x, url("/assets/img/cang-toi-2400.webp") 2x);
+  --logo-tile: #FAF7EE;
 }

@@ -2,7 +2,7 @@
 
 ## Tổng quan
 Web tĩnh miễn phí gồm 8 công cụ cho sinh viên và người làm logistics.
-Tên hiển thị trên web: LOGNEKO. Logo và ảnh sẽ bổ sung sau, trước mắt dùng khung giữ chỗ.
+Tên hiển thị trên web: LOGNEKO.
 Đặc tả đầy đủ nằm trong [MO-TA-DU-AN.md](MO-TA-DU-AN.md): luôn đọc trước khi làm một công cụ.
 
 ## Quy tắc

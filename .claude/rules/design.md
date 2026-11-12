@@ -12,10 +12,11 @@ Cảm hứng từ ảnh mẫu design/mau-trang.png. Chi tiết đầy đủ ở 
 - Thẻ bo góc 16 px, bóng rất nhẹ.
 - Ưu tiên điện thoại: thiết kế cho màn hình 360 px trước.
 - Chỉ mượn phong cách của trang mẫu; không chép logo, ảnh, câu chữ của họ.
+- Logo: mèo navy trong thùng cam, đặt cạnh chữ LOGNEKO; chế độ tối có ô kem phía sau.
 
 ## Bố cục trang chủ
 1. Thanh trên: logo, nút Công cụ, Từ điển, Mở công cụ, nút sáng/tối; trên điện thoại gộp vào menu.
-2. Đầu trang: ảnh cảng chiều tối, tiêu đề serif trắng, một dòng mô tả, nút xanh chanh, thẻ công cụ CBM nổi bên phải.
+2. Đầu trang: ảnh cảng có bản sáng và tối theo chế độ; chữ đậm trên ảnh sáng, chữ trắng trên ảnh tối; tiêu đề serif, một dòng mô tả, ô tìm kiếm, nút xanh chanh; không có thẻ CBM.
 3. Khối 8 công cụ: tiêu đề hai tông, danh sách dọc có vạch xanh chanh, bên cạnh là xem trước.
 4. Dải con số, mỗi số có vạch kẻ mảnh bên trái.
 5. Khối nền xanh rêu "Dữ liệu từ đâu".

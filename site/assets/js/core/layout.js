@@ -9,7 +9,7 @@ function renderHeader() {
   slot.innerHTML = `
     <div class="container">
       <header class="site-header">
-        <a class="logo" href="/">LOGNEKO</a>
+        <a class="logo" href="/"><img class="logo-mark" src="/assets/img/logo-96.png" alt="" width="43" height="36">LOGNEKO</a>
         <nav class="site-nav" id="site-nav" aria-label="Điều hướng chính">
           <a class="btn" href="/#cong-cu">Công cụ</a>
           <a class="btn" href="/#cong-cu" data-link="tu-dien">Từ điển</a>
@@ -55,7 +55,7 @@ function renderFooter() {
   slot.innerHTML = `
     <footer class="site-footer">
       <div class="container">
-        <a class="footer-logo" href="/">LOGNEKO</a>
+        <a class="footer-logo" href="/"><img class="logo-mark" src="/assets/img/logo-192.png" alt="" width="86" height="72">LOGNEKO</a>
         <div class="footer-cols">
           <section data-col="tinh-toan"><h3>Công cụ</h3></section>
           <section data-col="tra-cuu"><h3>Tra cứu</h3></section>
